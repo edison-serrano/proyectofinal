@@ -10,7 +10,7 @@ sprite::sprite(QObject *parent) : QObject(parent)
     ancho = 32;
     alto  = 32;
 
-    currentDirection = Right;  // Inicialmente mirando a la derecha
+    currentDirection = Down;  // Inicialmente mirando a la derecha
 
     timer->start(200);  // Modifica la velocidad en que itera entre las imágenes
 
