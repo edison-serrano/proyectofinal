@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <QPixmap>
 #include <QPainter>
+#include <QGraphicsScene>
 
 class sprite : public QObject, public QGraphicsItem
 {
@@ -27,11 +28,15 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
+    void setDirection(Direction direction);  // Añadir esta línea
+
+    bool checkCollision(int newX, int newY);
+
 signals:
 
 public slots:
     void Actualizacion();
-    void setDirection(Direction direction);  // Añadir esta línea
 };
 
 #endif // SPRITE_H
+
