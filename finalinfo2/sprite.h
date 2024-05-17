@@ -16,19 +16,22 @@ public:
     QTimer *timer;
     QPixmap *pixmap;
 
-    float filas,columnas;
+    float filas, columnas;
 
     float ancho;
     float alto;
 
+    enum Direction { Right, Left, Up, Down };
+    Direction currentDirection;
+
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
 
 signals:
 
 public slots:
     void Actualizacion();
+    void setDirection(Direction direction);  // Añadir esta línea
 };
 
 #endif // SPRITE_H

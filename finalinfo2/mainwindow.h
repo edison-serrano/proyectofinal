@@ -8,6 +8,7 @@
 #include <QGraphicsScene>
 #include "sprite.h"
 #include <pared.h>
+#include <QKeyEvent>  // Añadir esta línea
 
 namespace Ui {
 class MainWindow;
@@ -20,6 +21,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+protected:
+    void keyPressEvent(QKeyEvent *event);  // Añadir esta línea
 
 private:
     Ui::MainWindow *ui;
