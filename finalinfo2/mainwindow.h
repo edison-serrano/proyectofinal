@@ -2,13 +2,12 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QPainter>
-#include <QGraphicsItem>
-#include <QRectF>
 #include <QGraphicsScene>
+#include <QKeyEvent>
+#include <QList>
 #include "sprite.h"
-#include <pared.h>
-#include <QKeyEvent>  // Añadir esta línea
+#include "pared.h"
+#include "puerta.h"
 
 namespace Ui {
 class MainWindow;
@@ -23,16 +22,14 @@ public:
     ~MainWindow();
 
 protected:
-    void keyPressEvent(QKeyEvent *event);  // Añadir esta línea
+    void keyPressEvent(QKeyEvent *event) override;
 
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
-    QList<pared *> paredes;
-
     sprite *Yuri;
-
-    float x,y,ancho,alto;
+    QList<pared *> paredes;
+    QList<puerta *> puertas;  // Añadimos la lista de puertas
 };
 
 #endif // MAINWINDOW_H

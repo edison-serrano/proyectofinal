@@ -1,4 +1,7 @@
 #include "sprite.h"
+#include "pared.h"
+#include "puerta.h"
+
 
 sprite::sprite(QObject *parent) : QObject(parent)
 {
@@ -20,27 +23,8 @@ sprite::sprite(QObject *parent) : QObject(parent)
 void sprite::Actualizacion()
 {
     columnas += ancho;
-    switch (currentDirection) {
-    case Right:
-        if (columnas >= (12 * 32)) {  // Si se excede la imagen 12 (número 13), regresar a la imagen 10
-            columnas = 9 * 32;  // Regresar a la imagen 10
-        }
-        break;
-    case Left:
-        if (columnas >= (12 * 32)) {
-            columnas = 9 * 32;  // Regresar a la imagen 10
-        }
-        break;
-    case Down:
-        if (columnas >= (12 * 32)) {
-            columnas = 9 * 32;  // Regresar a la imagen 10
-        }
-        break;
-    case Up:
-        if (columnas >= (12 * 32)) {
-            columnas = 9 * 32;  // Regresar a la imagen 10
-        }
-        break;
+    if (columnas >= (12 * 32)) {  // Si se excede la imagen 12 (número 13), regresar a la imagen 10
+        columnas = 9 * 32;  // Regresar a la imagen 10
     }
 
     this->update(-ancho / 2, -alto / 2, ancho, alto);
@@ -79,4 +63,17 @@ QRectF sprite::boundingRect() const
 void sprite::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->drawPixmap(-ancho / 2, -alto / 2, *pixmap, columnas, filas, ancho, alto);
+}
+
+bool sprite::checkCollision(int newX, int newY)
+{
+    QRectF newRect(newX - ancho / 2, newY - alto / 2, ancho, alto);
+    QList<QGraphicsItem *> collidingItems = scene()->items(newRect);
+
+    foreach (QGraphicsItem *item, collidingItems) {
+        if (dynamic_cast<pared *>(item) || dynamic_cast<puerta *>(item)) {
+            return true;
+        }
+    }
+    return false;
 }

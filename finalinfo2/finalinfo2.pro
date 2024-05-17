@@ -12,11 +12,13 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     pared.cpp \
+    puerta.cpp \
     sprite.cpp
 
 HEADERS += \
     mainwindow.h \
     pared.h \
+    puerta.h \
     sprite.h
 
 FORMS += \
