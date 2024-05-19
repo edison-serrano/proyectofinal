@@ -1,6 +1,7 @@
 #include "sprite.h"
 #include "pared.h"
 #include "puerta.h"
+#include <QDebug>
 
 
 sprite::sprite(QObject *parent) : QObject(parent)
@@ -71,7 +72,7 @@ bool sprite::checkCollision(int newX, int newY)
     QList<QGraphicsItem *> collidingItems = scene()->items(newRect);
 
     foreach (QGraphicsItem *item, collidingItems) {
-        if (dynamic_cast<pared *>(item) || dynamic_cast<puerta *>(item)) {
+        if (dynamic_cast<pared *>(item)) {  // Solo considerar colisiones con paredes
             return true;
         }
     }
