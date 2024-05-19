@@ -5,6 +5,8 @@
 #include <QGraphicsScene>
 #include <QKeyEvent>
 #include <QList>
+#include <QTimer>
+#include <QMap>
 #include "sprite.h"
 #include "pared.h"
 #include "puerta.h"
@@ -29,7 +31,13 @@ private:
     QGraphicsScene *scene;
     sprite *Yuri;
     QList<pared *> paredes;
-    QList<puerta *> puertas;  // Añadimos la lista de puertas
+    QList<puerta *> puertas;
+
+    QMap<puerta*, QPointF> puertaOriginalPositions; // Para guardar las posiciones originales de las puertas
+    QMap<puerta*, QTimer*> puertaTimers; // Para manejar los temporizadores de las puertas
+
+private slots:
+    void closeDoor(puerta *p); // Slot para cerrar la puerta después de 3 segundos
 };
 
 #endif // MAINWINDOW_H

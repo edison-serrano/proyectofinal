@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "pared.h"
 #include "puerta.h"
+//#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -51,8 +52,13 @@ MainWindow::MainWindow(QWidget *parent) :
     scene->addItem(puertas.back());
     puertas.push_back(new puerta(472, 265, 40, 5)); // Puerta inferior centro izq
     scene->addItem(puertas.back());
-    puertas.push_back(new puerta(472, 130, 40, 5)); // Puerta inferior centro izq
+    puertas.push_back(new puerta(472, 130, 40, 5)); // Puerta superior centro der
     scene->addItem(puertas.back());
+
+    // Guardar posiciones originales de las puertas
+    foreach (puerta *p, puertas) {
+        puertaOriginalPositions[p] = p->pos();
+    }
 
     // para personaje principal
     Yuri = new sprite();
@@ -100,10 +106,40 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     // Verificar colisión con puertas
     foreach (puerta *p, puertas) {
         if (Yuri->collidesWithItem(p)) {
-            scene->removeItem(p);
-            puertas.removeOne(p);
-            delete p;
+            //qDebug() << "Colisión con puerta detectada en posición:" << p->pos();
+
+            // Mover la puerta 25 píxeles a la derecha
+            p->setPos(p->x() + 20, p->y());
+            //qDebug() << "Puerta movida a la posición:" << p->pos();
+
+            // Si la puerta ya tiene un temporizador, detenerlo
+            if (puertaTimers.contains(p)) {
+                puertaTimers[p]->stop();
+                delete puertaTimers[p];
+                puertaTimers.remove(p);
+            }
+
+            // Crear un nuevo temporizador para cerrar la puerta después de 3 segundos
+            QTimer *timer = new QTimer(this);
+            connect(timer, &QTimer::timeout, this, [=]() {
+                closeDoor(p);
+            });
+            timer->start(3000); // 3 segundos
+            puertaTimers[p] = timer;
+
             break;
         }
     }
+}
+
+void MainWindow::closeDoor(puerta *p)
+{
+    // Mover la puerta a su posición original
+    p->setPos(puertaOriginalPositions[p]);
+    //qDebug() << "Puerta cerrada a la posición:" << p->pos();
+
+    // Detener y eliminar el temporizador
+    puertaTimers[p]->stop();
+    delete puertaTimers[p];
+    puertaTimers.remove(p);
 }
