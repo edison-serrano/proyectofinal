@@ -7,9 +7,11 @@
 #include <QList>
 #include <QTimer>
 #include <QMap>
+#include <QLabel>
 #include "sprite.h"
 #include "pared.h"
 #include "puerta.h"
+#include "pasarnivel.h"
 
 namespace Ui {
 class MainWindow;
@@ -32,6 +34,8 @@ private:
     sprite *Yuri;
     QList<pared *> paredes;
     QList<puerta *> puertas;
+    pasarnivel *nextLevelTrigger; // Objeto pasarnivel
+    QLabel *nextLevelLabel; // QLabel para "Siguiente nivel"
 
     QMap<puerta*, QPointF> puertaOriginalPositions; // Para guardar las posiciones originales de las puertas
     QMap<puerta*, QTimer*> puertaTimers; // Para manejar los temporizadores de las puertas
@@ -41,4 +45,3 @@ private slots:
 };
 
 #endif // MAINWINDOW_H
-
