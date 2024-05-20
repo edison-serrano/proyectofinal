@@ -12,12 +12,14 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     pared.cpp \
+    pasarnivel.cpp \
     puerta.cpp \
     sprite.cpp
 
 HEADERS += \
     mainwindow.h \
     pared.h \
+    pasarnivel.h \
     puerta.h \
     sprite.h
 

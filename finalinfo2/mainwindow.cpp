@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "pared.h"
 #include "puerta.h"
+
 //#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -64,6 +65,20 @@ MainWindow::MainWindow(QWidget *parent) :
     Yuri = new sprite();
     scene->addItem(Yuri);
     Yuri->setPos(50, 50);
+
+
+    // Objeto pasarnivel
+    nextLevelTrigger = new pasarnivel(150, 150, 15, 15);
+    scene->addItem(nextLevelTrigger);
+
+    // QLabel para "Siguiente nivel"
+    nextLevelLabel = new QLabel(this);
+    nextLevelLabel->setText("Siguiente Nivel");
+    nextLevelLabel->setGeometry(300, 200, 200, 50); // Ajusta la posición y tamaño según sea necesario
+    nextLevelLabel->setStyleSheet("QLabel { background-color : white; color : red; font: bold 24px; }");
+    nextLevelLabel->setVisible(false);
+
+
 }
 
 MainWindow::~MainWindow()
@@ -130,7 +145,13 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             break;
         }
     }
+
+    // Verificar colisión con pasarnivel
+    if (Yuri->collidesWithItem(nextLevelTrigger)) {
+        nextLevelLabel->setVisible(true);
+    }
 }
+
 
 void MainWindow::closeDoor(puerta *p)
 {
@@ -143,3 +164,4 @@ void MainWindow::closeDoor(puerta *p)
     delete puertaTimers[p];
     puertaTimers.remove(p);
 }
+
