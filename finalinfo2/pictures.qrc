@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>yurisprite.png</file>
+        <file>Background.png</file>
     </qresource>
 </RCC>
