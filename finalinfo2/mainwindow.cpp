@@ -2,8 +2,9 @@
 #include "ui_mainwindow.h"
 #include "pared.h"
 #include "puerta.h"
-
-//#include <QDebug>
+#include "pasarnivel.h"
+#include <QLabel>
+#include <QGraphicsPixmapItem>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -15,18 +16,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->graphicsView->setScene(scene);
 
-    // paredes externas
-    paredes.push_back(new pared(0, 0, 770, 10)); // pared arriba
-    scene->addItem(paredes.back());
-    paredes.push_back(new pared(0, 390, 770, 10)); // pared abajo
-    scene->addItem(paredes.back());
-    paredes.push_back(new pared(0, 0, 10, 390)); // pared izquierda
-    scene->addItem(paredes.back());
-    paredes.push_back(new pared(760, 0, 10, 390)); // pared derecha
-    scene->addItem(paredes.back());
+    setupExternalWalls(scene);
 
-    //paredes internas
-    // Paredes horizontales
+    // Paredes internas
     paredes.push_back(new pared(0, 195, 257, 10)); // Pared horizontal izquierda
     scene->addItem(paredes.back());
     paredes.push_back(new pared(513, 195, 257, 10)); // Pared horizontal derecha
@@ -36,7 +28,6 @@ MainWindow::MainWindow(QWidget *parent) :
     paredes.push_back(new pared(310, 130, 160, 10)); // Pared horizontal centro superior
     scene->addItem(paredes.back());
 
-    // Paredes verticales
     paredes.push_back(new pared(385, 0, 10, 130)); // Pared vertical superior
     scene->addItem(paredes.back());
     paredes.push_back(new pared(513, 130, 10, 140)); // Pared vertical derecha
@@ -66,19 +57,25 @@ MainWindow::MainWindow(QWidget *parent) :
     scene->addItem(Yuri);
     Yuri->setPos(50, 50);
 
-
     // Objeto pasarnivel
     nextLevelTrigger = new pasarnivel(150, 150, 15, 15);
     scene->addItem(nextLevelTrigger);
 
     // QLabel para "Siguiente nivel"
     nextLevelLabel = new QLabel(this);
-    nextLevelLabel->setText("Siguiente Nivel");
+    nextLevelLabel->setText("Siguiente nivel");
     nextLevelLabel->setGeometry(300, 200, 200, 50); // Ajusta la posición y tamaño según sea necesario
     nextLevelLabel->setStyleSheet("QLabel { background-color : white; color : red; font: bold 24px; }");
     nextLevelLabel->setVisible(false);
 
+    // Crear la siguiente escena
+    scene2 = new QGraphicsScene();
+    scene2->setSceneRect(0, 0, 775, 315);
+    setupExternalWalls(scene2);
 
+    // Establecer una imagen de fondo para la escena2
+    QPixmap background(":/Background.png");
+    scene2->setBackgroundBrush(QBrush(background));
 }
 
 MainWindow::~MainWindow()
@@ -121,11 +118,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     // Verificar colisión con puertas
     foreach (puerta *p, puertas) {
         if (Yuri->collidesWithItem(p)) {
-            //qDebug() << "Colisión con puerta detectada en posición:" << p->pos();
-
-            // Mover la puerta 25 píxeles a la derecha
             p->setPos(p->x() + 20, p->y());
-            //qDebug() << "Puerta movida a la posición:" << p->pos();
 
             // Si la puerta ya tiene un temporizador, detenerlo
             if (puertaTimers.contains(p)) {
@@ -149,19 +142,42 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     // Verificar colisión con pasarnivel
     if (Yuri->collidesWithItem(nextLevelTrigger)) {
         nextLevelLabel->setVisible(true);
+        QTimer::singleShot(1000, this, &MainWindow::switchToNextScene); // Cambiar de escena después de 1 segundo
     }
 }
-
 
 void MainWindow::closeDoor(puerta *p)
 {
     // Mover la puerta a su posición original
     p->setPos(puertaOriginalPositions[p]);
-    //qDebug() << "Puerta cerrada a la posición:" << p->pos();
 
     // Detener y eliminar el temporizador
     puertaTimers[p]->stop();
     delete puertaTimers[p];
     puertaTimers.remove(p);
+}
+
+void MainWindow::switchToNextScene()
+{
+    ui->graphicsView->setScene(scene2); // Cambia a la escena2
+    Yuri->setPos(50, 50); // Resetear la posición de Yuri en la nueva escena
+    nextLevelLabel->setVisible(false);
+}
+
+
+
+void MainWindow::setupExternalWalls(QGraphicsScene *scene)
+{
+    QList<pared *> externalWalls;
+
+    externalWalls.push_back(new pared(0, 0, 770, 10)); // pared arriba
+    scene->addItem(externalWalls.back());
+    externalWalls.push_back(new pared(0, 390, 770, 10)); // pared abajo
+    scene->addItem(externalWalls.back());
+    externalWalls.push_back(new pared(0, 0, 10, 390)); // pared izquierda
+    scene->addItem(externalWalls.back());
+    externalWalls.push_back(new pared(760, 0, 10, 390)); // pared derecha
+    scene->addItem(externalWalls.back());
+
 }
 

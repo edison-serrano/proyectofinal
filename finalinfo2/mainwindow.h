@@ -31,6 +31,7 @@ protected:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
+    QGraphicsScene *scene2; // Nueva escena para el siguiente nivel
     sprite *Yuri;
     QList<pared *> paredes;
     QList<puerta *> puertas;
@@ -40,8 +41,11 @@ private:
     QMap<puerta*, QPointF> puertaOriginalPositions; // Para guardar las posiciones originales de las puertas
     QMap<puerta*, QTimer*> puertaTimers; // Para manejar los temporizadores de las puertas
 
+    void setupExternalWalls(QGraphicsScene *scene); // Método para configurar las paredes externas
+
 private slots:
     void closeDoor(puerta *p); // Slot para cerrar la puerta después de 3 segundos
+    void switchToNextScene(); // Slot para cambiar a la siguiente escena
 };
 
 #endif // MAINWINDOW_H
