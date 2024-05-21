@@ -12,6 +12,7 @@
 #include "pared.h"
 #include "puerta.h"
 #include "pasarnivel.h"
+#include "enemigo.h"
 
 namespace Ui {
 class MainWindow;

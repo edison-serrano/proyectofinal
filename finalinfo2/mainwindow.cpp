@@ -5,6 +5,7 @@
 #include "pasarnivel.h"
 #include <QLabel>
 #include <QGraphicsPixmapItem>
+#include "enemigo.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -55,6 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // para personaje principal
     Yuri = new sprite();
     scene->addItem(Yuri);
+
     Yuri->setPos(50, 50);
 
     // Objeto pasarnivel
@@ -104,6 +106,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     paredes.push_back(new pared(500, 220, 50, 10, QColor(0, 255, 0))); // Plataforma 3
     scene2->addItem(paredes.back());
+
+    paredes.push_back(new pared(110, 330, 50, 10, QColor(0, 255, 0))); // Plataforma 3
+    scene2->addItem(paredes.back());
+
 }
 
 MainWindow::~MainWindow()
@@ -171,6 +177,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     if (Yuri->collidesWithItem(nextLevelTrigger)) {
         nextLevelLabel->setVisible(true);
         QTimer::singleShot(1000, this, &MainWindow::switchToNextScene); // Cambiar de escena después de 1 segundo
+        scene2->addItem(Yuri);
+
     }
 }
 
@@ -188,9 +196,25 @@ void MainWindow::closeDoor(puerta *p)
 void MainWindow::switchToNextScene()
 {
     ui->graphicsView->setScene(scene2); // Cambia a la escena2
-    Yuri->setPos(50, 50); // Resetear la posición de Yuri en la nueva escena
     nextLevelLabel->setVisible(false);
+
+    Yuri->setPos(25, 374); // Resetear la posición de Yuri en la nueva escena
+
+    nextLevelLabel->setVisible(false);
+
+    // Crear y agregar un enemigo a la scene2
+    enemigo *nuevoEnemigo = new enemigo(500, 100, 50, 2); // Por ejemplo, posición (100, 100), tamaño 50, velocidad 2
+    scene2->addItem(nuevoEnemigo);
+
+    // Usa un temporizador para actualizar el movimiento del enemigo
+    QTimer *timer = new QTimer(this);
+
+    // Configurar el tiempo de actualización en milisegundos
+    int tiempoDeActualizacion = 120;
+    connect(timer, &QTimer::timeout, nuevoEnemigo, &enemigo::movimiento);
+    timer->start(tiempoDeActualizacion); // Configura el tiempo de actualizacion
 }
+
 
 
 

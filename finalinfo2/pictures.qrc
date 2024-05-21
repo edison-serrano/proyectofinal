@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>yurisprite.png</file>
         <file>Background.png</file>
+        <file>../../../../Downloads/enemigo.png</file>
+        <file>enemigo.png</file>
     </qresource>
 </RCC>
