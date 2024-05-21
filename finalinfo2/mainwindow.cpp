@@ -78,31 +78,31 @@ MainWindow::MainWindow(QWidget *parent) :
     scene2->setBackgroundBrush(QBrush(background));
 
     // Plataformas
-    paredes.push_back(new pared(100, 250, 50, 10)); // Plataforma 1
+    paredes.push_back(new pared(100, 250, 50, 10, QColor(0, 255, 0))); // Plataforma 1, color verde radioactivo
     scene2->addItem(paredes.back());
 
-    paredes.push_back(new pared(400, 200, 50, 10)); // Plataforma 2
+    paredes.push_back(new pared(400, 200, 50, 10, QColor(0, 255, 0))); // Plataforma 2
     scene2->addItem(paredes.back());
 
-    paredes.push_back(new pared(200, 150, 50, 10)); // Plataforma 3
+    paredes.push_back(new pared(200, 150, 50, 10, QColor(0, 255, 0))); // Plataforma 3
     scene2->addItem(paredes.back());
 
-    paredes.push_back(new pared(250, 120, 50, 10)); // Plataforma 3
+    paredes.push_back(new pared(250, 120, 50, 10, QColor(0, 255, 0))); // Plataforma 3
     scene2->addItem(paredes.back());
 
-    paredes.push_back(new pared(300, 100, 50, 10)); // Plataforma 3
+    paredes.push_back(new pared(300, 100, 50, 10, QColor(0, 255, 0))); // Plataforma 3
     scene2->addItem(paredes.back());
 
-    paredes.push_back(new pared(100, 120, 50, 10)); // Plataforma 3
+    paredes.push_back(new pared(100, 120, 50, 10, QColor(0, 255, 0))); // Plataforma 3
     scene2->addItem(paredes.back());
 
-    paredes.push_back(new pared(130, 80, 50, 10)); // Plataforma 3
+    paredes.push_back(new pared(130, 80, 50, 10,  QColor(0, 255, 0))); // Plataforma 3
     scene2->addItem(paredes.back());
 
-    paredes.push_back(new pared(130, 280, 50, 10)); // Plataforma 3
+    paredes.push_back(new pared(130, 280, 50, 10, QColor(0, 255, 0))); // Plataforma 3
     scene2->addItem(paredes.back());
 
-    paredes.push_back(new pared(500, 220, 50, 10)); // Plataforma 3
+    paredes.push_back(new pared(500, 220, 50, 10, QColor(0, 255, 0))); // Plataforma 3
     scene2->addItem(paredes.back());
 }
 
