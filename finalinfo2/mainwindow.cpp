@@ -203,7 +203,7 @@ void MainWindow::switchToNextScene()
     nextLevelLabel->setVisible(false);
 
     // Crear y agregar un enemigo a la scene2
-    enemigo *nuevoEnemigo = new enemigo(500, 100, 50, 2); // Por ejemplo, posición (100, 100), tamaño 50, velocidad 2
+    enemigo *nuevoEnemigo = new enemigo(500, 100, 50, 2); // posición (500, 100), tamaño 50, velocidad 2
     scene2->addItem(nuevoEnemigo);
 
     // Usa un temporizador para actualizar el movimiento del enemigo
