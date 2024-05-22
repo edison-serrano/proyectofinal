@@ -1,0 +1,10 @@
+release/enemigo.o
+release/main.o
+release/mainwindow.o
+release/pared.o
+release/pasarnivel.o
+release/puerta.o
+release/sprite.o
+release/qrc_pictures.o
+release/moc_mainwindow.o
+release/moc_sprite.o
