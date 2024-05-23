@@ -16,6 +16,8 @@ SOURCES += \
     pared.cpp \
     pasarnivel.cpp \
     puerta.cpp \
+    radiacion.cpp \
+    reactor.cpp \
     sprite.cpp
 
 HEADERS += \
@@ -25,6 +27,8 @@ HEADERS += \
     pared.h \
     pasarnivel.h \
     puerta.h \
+    radiacion.h \
+    reactor.h \
     sprite.h
 
 FORMS += \

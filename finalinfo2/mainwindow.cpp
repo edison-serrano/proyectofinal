@@ -6,6 +6,8 @@
 #include <QLabel>
 #include <QGraphicsPixmapItem>
 #include "enemigo.h"
+#include "reactor.h"
+#include "radiacion.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -56,12 +58,41 @@ MainWindow::MainWindow(QWidget *parent) :
     // para personaje principal
     Yuri = new sprite();
     scene->addItem(Yuri);
-
     Yuri->setPos(50, 50);
+
+    // Agregar sprite reactor.png con animación
+    Reactor *reactor = new Reactor(":/reactor.png", 96, 96, 16, 100); // 96x96 cada img, 16 en total, 100 ms por img
+    reactor->setPos(600, 230);
+    scene->addItem(reactor);
+
+
+    // Crear y agregar un enemigo a la scene
+    enemigo *nuevoEnemigo = new enemigo(640, 280, 30, 10); // posición, tamaño 30, velocidad 10
+    scene->addItem(nuevoEnemigo);
+    // Usa un temporizador para actualizar el movimiento del enemigo
+    QTimer *timer = new QTimer(this);
+    // Configurar el tiempo de actualización en milisegundos
+    int tiempoDeActualizacion = 120;
+    connect(timer, &QTimer::timeout, nuevoEnemigo, &enemigo::movimiento);
+    timer->start(tiempoDeActualizacion); // Configura el tiempo de actualizacion
+
+    /*
+    // Crear y agregar un enemigo a la scene
+    enemigo *nuevoEnemigo2 = new enemigo(500, 295, 25, 15); // posición, tamaño 30, velocidad 10
+    scene->addItem(nuevoEnemigo2);
+    connect(timer, &QTimer::timeout, nuevoEnemigo2, &enemigo::movimiento);
+    timer->start(tiempoDeActualizacion); // Configura el tiempo de actualizacion
+*/
+
+    // Agregar sprite radiacion.png con animación y movimiento aleatorio
+    Radiacion *radiacion = new Radiacion(":/radiacion.png", 192, 192, 5, 4, 100, scene, &paredes); // 192x192 cada img, 5x4 en total, 100 ms por img
+    radiacion->setPos(50, 200);
+    scene->addItem(radiacion);
 
     // Objeto pasarnivel
     nextLevelTrigger = new pasarnivel(150, 150, 15, 15);
     scene->addItem(nextLevelTrigger);
+
 
     // QLabel para "Siguiente nivel"
     nextLevelLabel = new QLabel(this);
@@ -111,6 +142,7 @@ MainWindow::MainWindow(QWidget *parent) :
     scene2->addItem(paredes.back());
 
 }
+
 
 MainWindow::~MainWindow()
 {
