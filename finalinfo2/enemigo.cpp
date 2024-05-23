@@ -5,7 +5,6 @@ enemigo::enemigo()
 
 }
 
-
 enemigo::enemigo(float posmx, float posmy,int tam, int vel)
 {
     size=tam;

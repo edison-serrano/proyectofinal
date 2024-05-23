@@ -2,7 +2,8 @@
     <qresource prefix="/">
         <file>yurisprite.png</file>
         <file>Background.png</file>
-        <file>../../../../Downloads/enemigo.png</file>
         <file>enemigo.png</file>
+        <file>reactor.png</file>
+        <file>radiacion.png</file>
     </qresource>
 </RCC>
