@@ -307,7 +307,21 @@ void MainWindow::checkCollisions()
     QList<QGraphicsItem *> collidingItems = Yuri->collidingItems();
     foreach (QGraphicsItem *item, collidingItems) {
         if (dynamic_cast<enemigo *>(item)) {
-            Yuri->decreaseLife();
+            Yuri->decreaseLife();// Restar vida al colisionar con enemigo
+            if (Yuri->vidas <= 0) {
+                // Reiniciar el juego
+                resetGame();
+                break;
+            }
+        } else if (dynamic_cast<Reactor *>(item)) {
+            Yuri->decreaseLife(); // Restar vida al colisionar con el reactor
+            if (Yuri->vidas <= 0) {
+                // Reiniciar el juego
+                resetGame();
+                break;
+            }
+        } else if (dynamic_cast<Radiacion *>(item)) {
+            Yuri->decreaseLife(); // Restar vida al colisionar con la radiación
             if (Yuri->vidas <= 0) {
                 // Reiniciar el juego
                 resetGame();
@@ -316,6 +330,7 @@ void MainWindow::checkCollisions()
         }
     }
 }
+
 
 void MainWindow::resetGame()
 {
