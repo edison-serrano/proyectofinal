@@ -3,7 +3,6 @@
 #include "puerta.h"
 #include <QDebug>
 
-
 sprite::sprite(QObject *parent) : QObject(parent)
 {
     timer = new QTimer();
@@ -13,6 +12,8 @@ sprite::sprite(QObject *parent) : QObject(parent)
 
     ancho = 32;
     alto  = 32;
+
+    vidas = 3;  // Inicializar las vidas a 3
 
     currentDirection = Down;  // Inicialmente mirando a la derecha
 
@@ -77,4 +78,10 @@ bool sprite::checkCollision(int newX, int newY)
         }
     }
     return false;
+}
+
+void sprite::decreaseLife()
+{
+    vidas--;
+    emit vidaCambiada(vidas);  // Emitir la señal cuando las vidas cambian
 }
