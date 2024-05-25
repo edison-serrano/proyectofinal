@@ -9,6 +9,7 @@
 #include <QMap>
 #include <QLabel>
 #include "sprite.h"
+#include "sprite2.h"
 #include "pared.h"
 #include "puerta.h"
 #include "pasarnivel.h"
@@ -34,6 +35,7 @@ private:
     QGraphicsScene *scene;
     QGraphicsScene *scene2; // Nueva escena para el siguiente nivel
     sprite *Yuri;
+    //sprite2 *Yuri2;
     QList<pared *> paredes;
     QList<puerta *> puertas;
     pasarnivel *nextLevelTrigger; // Objeto pasarnivel
@@ -45,6 +47,7 @@ private:
 
     void setupExternalWalls(QGraphicsScene *scene); // Método para configurar las paredes externas
     void setupScene2(); // Método para configurar la segunda escena
+    Sprite2 *sprite2;
 
 private slots:
     void closeDoor(puerta *p); // Slot para cerrar la puerta después de 3 segundos
