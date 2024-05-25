@@ -13,9 +13,9 @@ sprite::sprite(QObject *parent) : QObject(parent)
     ancho = 32;
     alto  = 32;
 
-    vidas = 3;  // Inicializar las vidas a 3
+    vidas = 100;  // Inicializar las vidas a 3
 
-    currentDirection = Down;  // Inicialmente mirando a la derecha
+    currentDirection = Down;  // Inicialmente mirando abajo
 
     timer->start(200);  // Modifica la velocidad en que itera entre las imágenes
 

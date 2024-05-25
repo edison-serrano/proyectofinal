@@ -4,6 +4,7 @@
 #include "puerta.h"
 #include "pasarnivel.h"
 #include <QLabel>
+#include <QPushButton>
 #include <QGraphicsPixmapItem>
 #include "enemigo.h"
 #include "reactor.h"
@@ -96,7 +97,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Etiqueta para mostrar las vidas
     lifeLabel = new QLabel(this);
-    lifeLabel->setText("Vidas: 3");
+    lifeLabel->setText("Vida: 100 %");
     lifeLabel->setGeometry(10, 10, 100, 30);
     lifeLabel->show();
 
@@ -116,6 +117,12 @@ MainWindow::MainWindow(QWidget *parent) :
     scene2->setSceneRect(0, 0, 775, 315);
     setupExternalWalls(scene2);
     setupScene2();
+
+
+    // Temporizador para verificar colisiones
+    QTimer *collisionTimer = new QTimer(this);
+    connect(collisionTimer, &QTimer::timeout, this, &MainWindow::checkCollisions);
+    collisionTimer->start(100);
 
 }
 
@@ -292,7 +299,7 @@ void MainWindow::setupExternalWalls(QGraphicsScene *scene)
 
 void MainWindow::actualizarVidas(int vidas)
 {
-    lifeLabel->setText(QString("Vidas: %1").arg(vidas));
+    lifeLabel->setText(QString("Vida: %1").arg(vidas));
 }
 
 void MainWindow::checkCollisions()
@@ -302,9 +309,39 @@ void MainWindow::checkCollisions()
         if (dynamic_cast<enemigo *>(item)) {
             Yuri->decreaseLife();
             if (Yuri->vidas <= 0) {
-                // Manejar el caso cuando las vidas se agotan (reiniciar el juego, mostrar un mensaje, etc.)
+                // Reiniciar el juego
+                resetGame();
+                break;
             }
-            break;
         }
     }
+}
+
+void MainWindow::resetGame()
+{
+    // Mostrar "GAME OVER" en rojo y fondo transparente
+    QLabel *gameOverLabel = new QLabel(this);
+    gameOverLabel->setText("GAME OVER");
+    gameOverLabel->setGeometry(300, 200, 200, 50); // Ajusta la posición y tamaño según sea necesario
+    gameOverLabel->setStyleSheet("QLabel { background-color : transparent; color : red; font: bold 24px; }");
+    gameOverLabel->show();
+
+    // Agregar un botón para reintentar
+    QPushButton *retryButton = new QPushButton("Reintentar", this);
+    retryButton->setGeometry(300, 250, 200, 50); // Ajusta la posición y tamaño según sea necesario
+    connect(retryButton, &QPushButton::clicked, this, &MainWindow::restartGame);
+    retryButton->show();
+}
+
+void MainWindow::restartGame()
+{
+    // Eliminar las etiquetas y botones creados durante el "GAME OVER"
+    foreach (QObject *object, this->children()) {
+        if (QLabel *label = qobject_cast<QLabel *>(object)) {
+            delete label;
+        } else if (QPushButton *button = qobject_cast<QPushButton *>(object)) {
+            delete button;
+        }
+    }
+
 }

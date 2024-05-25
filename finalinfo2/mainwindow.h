@@ -51,6 +51,8 @@ private slots:
     void switchToNextScene(); // Slot para cambiar a la siguiente escena
     void actualizarVidas(int vidas); // Slot para actualizar el QLabel de vidas
     void checkCollisions(); // Slot para verificar colisiones con enemigos
+    void resetGame();
+    void restartGame();
 };
 
 #endif // MAINWINDOW_H
