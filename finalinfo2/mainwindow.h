@@ -38,6 +38,7 @@ private:
     QList<puerta *> puertas;
     pasarnivel *nextLevelTrigger; // Objeto pasarnivel
     QLabel *nextLevelLabel; // QLabel para "Siguiente nivel"
+    QLabel *lifeLabel; // QLabel para mostrar las vidas restantes
 
     QMap<puerta*, QPointF> puertaOriginalPositions; // Para guardar las posiciones originales de las puertas
     QMap<puerta*, QTimer*> puertaTimers; // Para manejar los temporizadores de las puertas
@@ -48,6 +49,8 @@ private:
 private slots:
     void closeDoor(puerta *p); // Slot para cerrar la puerta después de 3 segundos
     void switchToNextScene(); // Slot para cambiar a la siguiente escena
+    void actualizarVidas(int vidas); // Slot para actualizar el QLabel de vidas
+    void checkCollisions(); // Slot para verificar colisiones con enemigos
 };
 
 #endif // MAINWINDOW_H

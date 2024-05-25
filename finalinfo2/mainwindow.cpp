@@ -94,6 +94,15 @@ MainWindow::MainWindow(QWidget *parent) :
     nextLevelTrigger = new pasarnivel(150, 150, 15, 15);
     scene->addItem(nextLevelTrigger);
 
+    // Etiqueta para mostrar las vidas
+    lifeLabel = new QLabel(this);
+    lifeLabel->setText("Vidas: 3");
+    lifeLabel->setGeometry(10, 10, 100, 30);
+    lifeLabel->show();
+
+    // Conectar la señal de cambio de vidas del sprite con la función de actualización de vidas
+    connect(Yuri, &sprite::vidaCambiada, this, &MainWindow::actualizarVidas);
+
 
     // QLabel para "Siguiente nivel"
     nextLevelLabel = new QLabel(this);
@@ -279,4 +288,23 @@ void MainWindow::setupExternalWalls(QGraphicsScene *scene)
     scene->addItem(externalWalls.back());
     externalWalls.push_back(new pared(760, 0, 10, 390)); // pared derecha
     scene->addItem(externalWalls.back());
+}
+
+void MainWindow::actualizarVidas(int vidas)
+{
+    lifeLabel->setText(QString("Vidas: %1").arg(vidas));
+}
+
+void MainWindow::checkCollisions()
+{
+    QList<QGraphicsItem *> collidingItems = Yuri->collidingItems();
+    foreach (QGraphicsItem *item, collidingItems) {
+        if (dynamic_cast<enemigo *>(item)) {
+            Yuri->decreaseLife();
+            if (Yuri->vidas <= 0) {
+                // Manejar el caso cuando las vidas se agotan (reiniciar el juego, mostrar un mensaje, etc.)
+            }
+            break;
+        }
+    }
 }
