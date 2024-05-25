@@ -19,7 +19,8 @@ SOURCES += \
     puerta.cpp \
     radiacion.cpp \
     reactor.cpp \
-    sprite.cpp
+    sprite.cpp \
+    sprite2.cpp
 
 HEADERS += \
     enemigo.h \
@@ -31,7 +32,8 @@ HEADERS += \
     puerta.h \
     radiacion.h \
     reactor.h \
-    sprite.h
+    sprite.h \
+    sprite2.h
 
 FORMS += \
     mainwindow.ui

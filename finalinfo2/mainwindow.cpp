@@ -9,6 +9,7 @@
 #include "enemigo.h"
 #include "reactor.h"
 #include "radiacion.h"
+#include "sprite2.h"
 #include "pendulo.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -57,10 +58,10 @@ MainWindow::MainWindow(QWidget *parent) :
         puertaOriginalPositions[p] = p->pos();
     }
 
-    // para personaje principal
+    // para personaje principal scene
     Yuri = new sprite();
     scene->addItem(Yuri);
-    Yuri->setPos(50, 50);
+    Yuri->setPos(385, 195);
 
     // Agregar sprite reactor.png con animación
     Reactor *reactor = new Reactor(":/reactor.png", 96, 96, 16, 100); // 96x96 cada img, 16 en total, 100 ms por img
@@ -115,7 +116,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Crear la siguiente escena
     scene2 = new QGraphicsScene();
     scene2->setSceneRect(0, 0, 775, 315);
-    setupExternalWalls(scene2);
+    //setupExternalWalls(scene2);
     setupScene2();
 
 
@@ -131,7 +132,7 @@ void MainWindow::setupScene2()
     // Establecer una imagen de fondo para la escena2
     QPixmap background(":/Background.png");
     scene2->setBackgroundBrush(QBrush(background));
-
+/*
     // Plataformas
     paredes.push_back(new pared(100, 250, 50, 10, QColor(0, 255, 0))); // Plataforma 1, color verde radioactivo
     scene2->addItem(paredes.back());
@@ -177,6 +178,13 @@ void MainWindow::setupScene2()
     // Pared inferior
     paredes.push_back(new pared(centerX, topY + wallHeight / 2 + opening, wallWidth, wallHeight / 2));
     scene2->addItem(paredes.back());
+*/
+    // Agregar sprite animado
+    sprite2 = new Sprite2();
+    sprite2->setPos(25, 260); // Ajusta la posición según sea necesario
+    scene2->addItem(sprite2);
+    sprite2->startAnimation(); // Iniciar la animación
+
 }
 
 
@@ -245,8 +253,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     if (Yuri->collidesWithItem(nextLevelTrigger)) {
         nextLevelLabel->setVisible(true);
         QTimer::singleShot(1000, this, &MainWindow::switchToNextScene); // Cambiar de escena después de 1 segundo
-        scene2->addItem(Yuri);
-
+        //scene2->addItem(Yuri);
     }
 }
 
@@ -266,7 +273,7 @@ void MainWindow::switchToNextScene()
     ui->graphicsView->setScene(scene2); // Cambia a la escena2
     nextLevelLabel->setVisible(false);
 
-    Yuri->setPos(25, 374); // Resetear la posición de Yuri en la nueva escena
+    //Yuri->setPos(25, 374); // Resetear la posición de Yuri en la nueva escena
 
     nextLevelLabel->setVisible(false);
 
@@ -358,5 +365,4 @@ void MainWindow::restartGame()
             delete button;
         }
     }
-
 }
