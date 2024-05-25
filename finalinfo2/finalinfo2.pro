@@ -15,6 +15,7 @@ SOURCES += \
     parabolico.cpp \
     pared.cpp \
     pasarnivel.cpp \
+    pendulo.cpp \
     puerta.cpp \
     radiacion.cpp \
     reactor.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     parabolico.h \
     pared.h \
     pasarnivel.h \
+    pendulo.h \
     puerta.h \
     radiacion.h \
     reactor.h \

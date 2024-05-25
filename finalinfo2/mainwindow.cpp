@@ -8,6 +8,7 @@
 #include "enemigo.h"
 #include "reactor.h"
 #include "radiacion.h"
+#include "pendulo.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -105,7 +106,12 @@ MainWindow::MainWindow(QWidget *parent) :
     scene2 = new QGraphicsScene();
     scene2->setSceneRect(0, 0, 775, 315);
     setupExternalWalls(scene2);
+    setupScene2();
 
+}
+
+void MainWindow::setupScene2()
+{
     // Establecer una imagen de fondo para la escena2
     QPixmap background(":/Background.png");
     scene2->setBackgroundBrush(QBrush(background));
@@ -141,6 +147,20 @@ MainWindow::MainWindow(QWidget *parent) :
     paredes.push_back(new pared(110, 330, 50, 10, QColor(0, 255, 0))); // Plataforma 3
     scene2->addItem(paredes.back());
 
+    // Agregar dos paredes verticales con abertura en el centro
+    int wallWidth = 10;
+    int wallHeight = 250;
+    int opening = 50; // Abertura de 50px
+    int centerX = (scene2->width() / 2) - (wallWidth / 2);
+    int topY = (scene2->height()/1.3) - (wallHeight / 2) - (opening / 2);
+
+    // Pared superior
+    paredes.push_back(new pared(centerX, topY, wallWidth, wallHeight / 2));
+    scene2->addItem(paredes.back());
+
+    // Pared inferior
+    paredes.push_back(new pared(centerX, topY + wallHeight / 2 + opening, wallWidth, wallHeight / 2));
+    scene2->addItem(paredes.back());
 }
 
 
@@ -247,9 +267,6 @@ void MainWindow::switchToNextScene()
     timer->start(tiempoDeActualizacion); // Configura el tiempo de actualizacion
 }
 
-
-
-
 void MainWindow::setupExternalWalls(QGraphicsScene *scene)
 {
     QList<pared *> externalWalls;
@@ -262,6 +279,4 @@ void MainWindow::setupExternalWalls(QGraphicsScene *scene)
     scene->addItem(externalWalls.back());
     externalWalls.push_back(new pared(760, 0, 10, 390)); // pared derecha
     scene->addItem(externalWalls.back());
-
 }
-

@@ -43,6 +43,7 @@ private:
     QMap<puerta*, QTimer*> puertaTimers; // Para manejar los temporizadores de las puertas
 
     void setupExternalWalls(QGraphicsScene *scene); // Método para configurar las paredes externas
+    void setupScene2(); // Método para configurar la segunda escena
 
 private slots:
     void closeDoor(puerta *p); // Slot para cerrar la puerta después de 3 segundos
