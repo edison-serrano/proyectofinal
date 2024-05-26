@@ -14,7 +14,9 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    scene2Initialized(false),
+    nextLevelActivated(false)
 {
     scene = new QGraphicsScene();
     scene->setSceneRect(0, 0, 775, 315);
@@ -210,8 +212,13 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         Yuri->setDirection(sprite::Down);  // Cambiar dirección
         break;
     case Qt::Key_A:
-        newX -= 2;  // Mover hacia la izquierda
-        Yuri->setDirection(sprite::Left);  // Cambiar dirección
+        if (ui->graphicsView->scene() == scene2) { // Si el enfoque está en la escena2
+            newX_sprite2 -= 2;  // Mover sprite2 hacia la izquierda
+            sprite2->setPos(newX_sprite2, newY_sprite2);
+        } else {
+            newX -= 2;  // Mover Yuri hacia la izquierda
+            Yuri->setDirection(sprite::Left);  // Cambiar dirección
+        }
         break;
     case Qt::Key_D:
         // Movimiento de sprite2 hacia la derecha
@@ -258,10 +265,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     }
 
     // Verificar colisión con pasarnivel
-    if (Yuri->collidesWithItem(nextLevelTrigger)) {
+    if (Yuri->collidesWithItem(nextLevelTrigger) && !nextLevelActivated) {
         nextLevelLabel->setVisible(true);
         QTimer::singleShot(1000, this, &MainWindow::switchToNextScene); // Cambiar de escena después de 1 segundo
-        //scene2->addItem(Yuri);
+        nextLevelActivated = true;
     }
 }
 
@@ -281,22 +288,26 @@ void MainWindow::switchToNextScene()
     ui->graphicsView->setScene(scene2); // Cambia a la escena2
     nextLevelLabel->setVisible(false);
 
-    //Yuri->setPos(25, 374); // Resetear la posición de Yuri en la nueva escena
+    if (!scene2Initialized) {
+        // Crear y agregar un enemigo a la scene2 solo si no ha sido inicializada
+        enemigo *nuevoEnemigo = new enemigo(500, 100, 50, 2); // posición (500, 100), tamaño 50, velocidad 2
+        scene2->addItem(nuevoEnemigo);
 
-    nextLevelLabel->setVisible(false);
+        // Usa un temporizador para actualizar el movimiento del enemigo
+        QTimer *timer = new QTimer(this);
+        // Configurar el tiempo de actualización en milisegundos
+        int tiempoDeActualizacion = 120;
+        connect(timer, &QTimer::timeout, nuevoEnemigo, &enemigo::movimiento);
+        timer->start(tiempoDeActualizacion); // Configura el tiempo de actualizacion
 
-    // Crear y agregar un enemigo a la scene2
-    enemigo *nuevoEnemigo = new enemigo(500, 100, 50, 2); // posición (500, 100), tamaño 50, velocidad 2
-    scene2->addItem(nuevoEnemigo);
+        scene2Initialized = true; // Marcar scene2 como inicializada
 
-    // Usa un temporizador para actualizar el movimiento del enemigo
-    QTimer *timer = new QTimer(this);
-
-    // Configurar el tiempo de actualización en milisegundos
-    int tiempoDeActualizacion = 120;
-    connect(timer, &QTimer::timeout, nuevoEnemigo, &enemigo::movimiento);
-    timer->start(tiempoDeActualizacion); // Configura el tiempo de actualizacion
+        // Agregar Yuri a la escena2 solo si no ha sido inicializada
+        //scene2->addItem(Yuri);
+        //Yuri->setPos(25, 374); // Resetear la posición de Yuri en la nueva escena
+    }
 }
+
 
 void MainWindow::setupExternalWalls(QGraphicsScene *scene)
 {

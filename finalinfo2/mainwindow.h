@@ -48,6 +48,8 @@ private:
     void setupExternalWalls(QGraphicsScene *scene); // Método para configurar las paredes externas
     void setupScene2(); // Método para configurar la segunda escena
     Sprite2 *sprite2;
+    bool scene2Initialized;
+    bool nextLevelActivated;
 
 private slots:
     void closeDoor(puerta *p); // Slot para cerrar la puerta después de 3 segundos
