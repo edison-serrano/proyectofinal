@@ -20,6 +20,7 @@ private:
     const int frameWidth;
     const int frameHeight;
     const int totalFrames;
+    const float scaleFactor; // Added to control the scaling factor
 };
 
 #endif // SPRITE2_H
