@@ -181,7 +181,7 @@ void MainWindow::setupScene2()
 */
     // Agregar sprite animado
     sprite2 = new Sprite2();
-    sprite2->setPos(25, 260); // Ajusta la posición según sea necesario
+    sprite2->setPos(25, 354); // Ajusta la posición según sea necesario
     scene2->addItem(sprite2);
     sprite2->startAnimation(); // Iniciar la animación
 
@@ -197,6 +197,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     int newX = Yuri->x();
     int newY = Yuri->y();
+    int newX_sprite2 = sprite2->x();
+    int newY_sprite2 = sprite2->y();
 
     switch (event->key()) {
     case Qt::Key_W:
@@ -212,8 +214,14 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         Yuri->setDirection(sprite::Left);  // Cambiar dirección
         break;
     case Qt::Key_D:
-        newX += 2;  // Mover hacia la derecha
-        Yuri->setDirection(sprite::Right);  // Cambiar dirección
+        // Movimiento de sprite2 hacia la derecha
+        if (ui->graphicsView->scene() == scene2) { // Si el enfoque está en la escena2
+            newX_sprite2 += 2;  // Mover sprite2 hacia la derecha
+            sprite2->setPos(newX_sprite2, newY_sprite2);
+        } else {
+            newX+= 2;  // Mover Yuri hacia la derecha
+            Yuri->setDirection(sprite::Right);  // Cambiar dirección
+        }
         break;
     default:
         QMainWindow::keyPressEvent(event);
