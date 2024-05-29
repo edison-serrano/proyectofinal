@@ -12,6 +12,7 @@
 #include "sprite2.h"
 #include "pendulo.h"
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -212,7 +213,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         Yuri->setDirection(sprite::Down);  // Cambiar dirección
         break;
     case Qt::Key_A:
-        if (ui->graphicsView->scene() == scene2) { // Si el enfoque está en la escena2
+        if (ui->graphicsView->scene() == scene2) {
             newX_sprite2 -= 2;  // Mover sprite2 hacia la izquierda
             sprite2->setPos(newX_sprite2, newY_sprite2);
         } else {
@@ -221,13 +222,18 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         }
         break;
     case Qt::Key_D:
-        // Movimiento de sprite2 hacia la derecha
-        if (ui->graphicsView->scene() == scene2) { // Si el enfoque está en la escena2
+        if (ui->graphicsView->scene() == scene2) {
             newX_sprite2 += 2;  // Mover sprite2 hacia la derecha
             sprite2->setPos(newX_sprite2, newY_sprite2);
         } else {
-            newX+= 2;  // Mover Yuri hacia la derecha
+            newX += 2;  // Mover Yuri hacia la derecha
             Yuri->setDirection(sprite::Right);  // Cambiar dirección
+        }
+        break;
+    case Qt::Key_Space:
+        if (ui->graphicsView->scene() == scene2) {
+            sprite2->startParabolicMovement(); // Iniciar el movimiento parabólico
+            sprite2->startAnimation(); // Iniciar la animación en el eje X
         }
         break;
     default:
@@ -271,6 +277,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         nextLevelActivated = true;
     }
 }
+
 
 void MainWindow::closeDoor(puerta *p)
 {
