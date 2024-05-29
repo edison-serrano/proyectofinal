@@ -9,7 +9,7 @@ Sprite2::Sprite2(QGraphicsItem* parent)
     scaleFactor(0.3),
     parabolicMoving(false), // Inicializar la variable
     parabolicStep(0),
-    parabolicHeight(100),  // Altura del salto
+    parabolicHeight(50),  // Altura del salto
     parabolicDuration(30)  // Duración del salto
 {
     spriteSheet.load(":/sprite2.png");  // Ensure the path is correct
@@ -44,7 +44,7 @@ void Sprite2::moveParabolic() {
         double newY = initialY - 4 * parabolicHeight * t * (1 - t); // Calcular la posición en el eje Y
         setPos(newX, newY); // Actualizar la posición del sprite en ambos ejes
         parabolicStep++;
-        QTimer::singleShot(10, this, &Sprite2::moveParabolic);  // Ajustar la duración del paso
+        QTimer::singleShot(30, this, &Sprite2::moveParabolic);  // Ajustar la duración del paso
     } else {
         parabolicMoving = false;
     }

@@ -1,3 +1,4 @@
+// mainwindow.h
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -8,12 +9,14 @@
 #include <QTimer>
 #include <QMap>
 #include <QLabel>
+#include <QPushButton>
 #include "sprite.h"
 #include "sprite2.h"
 #include "pared.h"
 #include "puerta.h"
 #include "pasarnivel.h"
 #include "enemigo.h"
+#include "menu.h" // Agregar la inclusión de menu.h
 
 namespace Ui {
 class MainWindow;
@@ -26,6 +29,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    // Agrega la declaración del método hideButtons
+    void hideButtons();
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
@@ -51,6 +57,8 @@ private:
     bool scene2Initialized;
     bool nextLevelActivated;
 
+    Menu *menu; // Agregar instancia de Menu como miembro privado
+
 private slots:
     void closeDoor(puerta *p); // Slot para cerrar la puerta después de 3 segundos
     void switchToNextScene(); // Slot para cambiar a la siguiente escena
@@ -58,6 +66,7 @@ private slots:
     void checkCollisions(); // Slot para verificar colisiones con enemigos
     void resetGame();
     void restartGame();
+    void switchToGameScene(); // Slot para cambiar a la escena del juego
 };
 
 #endif // MAINWINDOW_H

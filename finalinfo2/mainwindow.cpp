@@ -12,7 +12,6 @@
 #include "sprite2.h"
 #include "pendulo.h"
 
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -23,7 +22,13 @@ MainWindow::MainWindow(QWidget *parent) :
     scene->setSceneRect(0, 0, 775, 315);
     ui->setupUi(this);
 
-    ui->graphicsView->setScene(scene);
+    menu = new Menu();
+    connect(menu, &Menu::iniciarJuegoSignal, this, &MainWindow::switchToGameScene);
+
+    // Conecta los botones del archivo .ui con las funciones correspondientes
+    connect(ui->startGameButton, &QPushButton::clicked, this, &MainWindow::hideButtons);
+    connect(ui->highScoreButton, &QPushButton::clicked, this, &MainWindow::hideButtons);
+    connect(ui->quitButton, &QPushButton::clicked, this, &MainWindow::hideButtons);
 
     setupExternalWalls(scene);
 
@@ -130,12 +135,28 @@ MainWindow::MainWindow(QWidget *parent) :
 
 }
 
+void MainWindow::hideButtons()
+{
+    ui->startGameButton->hide();
+    ui->highScoreButton->hide();
+    ui->quitButton->hide();
+
+    // Emitir la señal para iniciar el juego
+    menu->iniciarJuegoSignal();
+}
+
+
+void MainWindow::switchToGameScene()
+{
+    ui->graphicsView->setScene(scene); // Cambiar a la escena del juego
+}
+
 void MainWindow::setupScene2()
 {
     // Establecer una imagen de fondo para la escena2
     QPixmap background(":/Background.png");
     scene2->setBackgroundBrush(QBrush(background));
-/*
+
     // Plataformas
     paredes.push_back(new pared(100, 250, 50, 10, QColor(0, 255, 0))); // Plataforma 1, color verde radioactivo
     scene2->addItem(paredes.back());
@@ -181,7 +202,7 @@ void MainWindow::setupScene2()
     // Pared inferior
     paredes.push_back(new pared(centerX, topY + wallHeight / 2 + opening, wallWidth, wallHeight / 2));
     scene2->addItem(paredes.back());
-*/
+
     // Agregar sprite animado
     sprite2 = new Sprite2();
     sprite2->setPos(25, 354); // Ajusta la posición según sea necesario
@@ -233,7 +254,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     case Qt::Key_Space:
         if (ui->graphicsView->scene() == scene2) {
             sprite2->startParabolicMovement(); // Iniciar el movimiento parabólico
-            sprite2->startAnimation(); // Iniciar la animación en el eje X
         }
         break;
     default:
@@ -277,7 +297,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         nextLevelActivated = true;
     }
 }
-
 
 void MainWindow::closeDoor(puerta *p)
 {
