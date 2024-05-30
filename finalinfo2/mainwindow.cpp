@@ -22,7 +22,13 @@ MainWindow::MainWindow(QWidget *parent) :
     scene->setSceneRect(0, 0, 775, 315);
     ui->setupUi(this);
 
-    ui->graphicsView->setScene(scene);
+    menu = new Menu();
+    connect(menu, &Menu::iniciarJuegoSignal, this, &MainWindow::switchToGameScene);
+
+    // Conecta los botones del archivo .ui con las funciones correspondientes
+    connect(ui->startGameButton, &QPushButton::clicked, this, &MainWindow::hideButtons);
+    connect(ui->highScoreButton, &QPushButton::clicked, this, &MainWindow::hideButtons);
+    connect(ui->quitButton, &QPushButton::clicked, this, &MainWindow::hideButtons);
 
     setupExternalWalls(scene);
 
@@ -129,12 +135,28 @@ MainWindow::MainWindow(QWidget *parent) :
 
 }
 
+void MainWindow::hideButtons()
+{
+    ui->startGameButton->hide();
+    ui->highScoreButton->hide();
+    ui->quitButton->hide();
+
+    // Emitir la señal para iniciar el juego
+    menu->iniciarJuegoSignal();
+}
+
+
+void MainWindow::switchToGameScene()
+{
+    ui->graphicsView->setScene(scene); // Cambiar a la escena del juego
+}
+
 void MainWindow::setupScene2()
 {
     // Establecer una imagen de fondo para la escena2
     QPixmap background(":/Background.png");
     scene2->setBackgroundBrush(QBrush(background));
-/*
+
     // Plataformas
     paredes.push_back(new pared(100, 250, 50, 10, QColor(0, 255, 0))); // Plataforma 1, color verde radioactivo
     scene2->addItem(paredes.back());
@@ -180,7 +202,7 @@ void MainWindow::setupScene2()
     // Pared inferior
     paredes.push_back(new pared(centerX, topY + wallHeight / 2 + opening, wallWidth, wallHeight / 2));
     scene2->addItem(paredes.back());
-*/
+
     // Agregar sprite animado
     sprite2 = new Sprite2();
     sprite2->setPos(25, 354); // Ajusta la posición según sea necesario
@@ -212,7 +234,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         Yuri->setDirection(sprite::Down);  // Cambiar dirección
         break;
     case Qt::Key_A:
-        if (ui->graphicsView->scene() == scene2) { // Si el enfoque está en la escena2
+        if (ui->graphicsView->scene() == scene2) {
             newX_sprite2 -= 2;  // Mover sprite2 hacia la izquierda
             sprite2->setPos(newX_sprite2, newY_sprite2);
         } else {
@@ -221,13 +243,17 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         }
         break;
     case Qt::Key_D:
-        // Movimiento de sprite2 hacia la derecha
-        if (ui->graphicsView->scene() == scene2) { // Si el enfoque está en la escena2
+        if (ui->graphicsView->scene() == scene2) {
             newX_sprite2 += 2;  // Mover sprite2 hacia la derecha
             sprite2->setPos(newX_sprite2, newY_sprite2);
         } else {
-            newX+= 2;  // Mover Yuri hacia la derecha
+            newX += 2;  // Mover Yuri hacia la derecha
             Yuri->setDirection(sprite::Right);  // Cambiar dirección
+        }
+        break;
+    case Qt::Key_Space:
+        if (ui->graphicsView->scene() == scene2) {
+            sprite2->startParabolicMovement(); // Iniciar el movimiento parabólico
         }
         break;
     default:
