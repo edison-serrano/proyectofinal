@@ -12,6 +12,7 @@ SOURCES += \
     enemigo.cpp \
     main.cpp \
     mainwindow.cpp \
+    menu.cpp \
     parabolico.cpp \
     pared.cpp \
     pasarnivel.cpp \
@@ -25,6 +26,7 @@ SOURCES += \
 HEADERS += \
     enemigo.h \
     mainwindow.h \
+    menu.h \
     parabolico.h \
     pared.h \
     pasarnivel.h \
