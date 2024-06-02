@@ -3,17 +3,22 @@
 
 #include <QGraphicsPixmapItem>
 #include <QTimer>
+#include <QObject>
+#include <QGraphicsItem>
+#include <QPixmap>
+#include <QPainter>
+#include <QGraphicsScene>
 
 class Sprite2 : public QObject, public QGraphicsPixmapItem {
     Q_OBJECT
 public:
     Sprite2(QGraphicsItem* parent = nullptr);
     void startAnimation();
-    void startParabolicMovement();  // Nueva función para iniciar el movimiento parabólico
+    void startParabolicMovement();
 
 private slots:
     void updateFrame();
-    void moveParabolic();  // Nuevo slot para el movimiento parabólico
+    void moveParabolic();
 
 private:
     QPixmap spriteSheet;

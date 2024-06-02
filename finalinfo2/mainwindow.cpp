@@ -188,6 +188,14 @@ void MainWindow::setupScene2()
     paredes.push_back(new pared(110, 330, 50, 10, QColor(0, 255, 0))); // Plataforma 3
     scene2->addItem(paredes.back());
 
+    paredes.push_back(new pared(70, 350, 50, 10, QColor(0, 255, 0))); // Plataforma 3
+    scene2->addItem(paredes.back());
+
+    paredes.push_back(new pared(310, 260, 160, 10)); // Pared horizontal centro inferior
+    scene2->addItem(paredes.back());
+
+
+
     // Agregar dos paredes verticales con abertura en el centro
     int wallWidth = 10;
     int wallHeight = 250;
@@ -203,9 +211,16 @@ void MainWindow::setupScene2()
     paredes.push_back(new pared(centerX, topY + wallHeight / 2 + opening, wallWidth, wallHeight / 2));
     scene2->addItem(paredes.back());
 
+    paredes.push_back(new pared(0, 195, 257, 10)); // Pared horizontal izquierda
+    scene2->addItem(paredes.back());
+    paredes.push_back(new pared(513, 195, 257, 10)); // Pared horizontal derecha
+    scene2->addItem(paredes.back());
+
+    setupExternalWalls(scene2);
+
     // Agregar sprite animado
     sprite2 = new Sprite2();
-    sprite2->setPos(25, 354); // Ajusta la posición según sea necesario
+    sprite2->setPos(25, 343); // Ajusta la posición según sea necesario
     scene2->addItem(sprite2);
     sprite2->startAnimation(); // Iniciar la animación
 
