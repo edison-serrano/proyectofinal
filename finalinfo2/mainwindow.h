@@ -18,6 +18,7 @@
 #include "enemigo.h"
 #include "menu.h"
 #include "inventario.h"
+#include "npc1.h"
 
 namespace Ui {
 class MainWindow;
@@ -60,6 +61,7 @@ private:
     bool scene2Initialized;
     bool nextLevelActivated;
     Inventario* inventario;
+    npc1 *npc1Object;
 
     int numeroDeObjetos;
     QLabel *inventarioLabel;
@@ -75,6 +77,7 @@ private slots:
     void resetGame();
     void restartGame();
     void switchToGameScene(); // Slot para cambiar a la escena del juego
+    void showMessage();
 };
 
 #endif // MAINWINDOW_H
