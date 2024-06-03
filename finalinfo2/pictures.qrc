@@ -8,5 +8,6 @@
         <file>sprite2.png</file>
         <file>plataforma1.png</file>
         <file>inv1.png</file>
+        <file>npc1.png</file>
     </qresource>
 </RCC>

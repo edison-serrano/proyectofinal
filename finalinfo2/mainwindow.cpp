@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QGraphicsPixmapItem>
+#include <QMessageBox>
 #include "enemigo.h"
 #include "reactor.h"
 #include "radiacion.h"
@@ -82,6 +83,14 @@ MainWindow::MainWindow(QWidget *parent) :
     scene->addItem(Yuri);
     Yuri->setPos(385, 195);
 
+    // Crear un objeto npc1 y agregarlo a la escena
+    npc1Object = new npc1();
+    scene->addItem(npc1Object);
+    npc1Object->setPos(375, 125);
+
+    // Conectar la señal collisionOccurred de npc1 con el slot showMessage
+    connect(npc1Object, &npc1::collisionOccurred, this, &MainWindow::showMessage);
+
     // Agregar sprite reactor.png con animación
     Reactor *reactor = new Reactor(":/reactor.png", 96, 96, 16, 100); // 96x96 cada img, 16 en total, 100 ms por img
     reactor->setPos(600, 230);
@@ -132,6 +141,7 @@ MainWindow::MainWindow(QWidget *parent) :
     lifeLabel->setText("Vida: 100 %");
     lifeLabel->setGeometry(10, 10, 100, 30);
     lifeLabel->show();
+
 
     // Conectar la señal de cambio de vidas del sprite con la función de actualización de vidas
     connect(Yuri, &sprite::vidaCambiada, this, &MainWindow::actualizarVidas);
@@ -386,6 +396,13 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         QTimer::singleShot(1000, this, &MainWindow::switchToNextScene); // Cambiar de escena después de 1 segundo
         nextLevelActivated = true;
     }
+}
+
+
+void MainWindow::showMessage()
+{
+    // Mostrar un cuadro de diálogo que diga "Hola Yuri"
+    QMessageBox::information(this, "Mensaje", "Hola Yuri");
 }
 
 void MainWindow::actualizarInventarioLabel() {

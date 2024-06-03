@@ -14,6 +14,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     menu.cpp \
+    npc1.cpp \
     parabolico.cpp \
     pared.cpp \
     pasarnivel.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     inventario.h \
     mainwindow.h \
     menu.h \
+    npc1.h \
     parabolico.h \
     pared.h \
     pasarnivel.h \
