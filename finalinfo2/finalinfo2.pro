@@ -17,6 +17,7 @@ SOURCES += \
     pared.cpp \
     pasarnivel.cpp \
     pendulo.cpp \
+    plataforma.cpp \
     puerta.cpp \
     radiacion.cpp \
     reactor.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     pared.h \
     pasarnivel.h \
     pendulo.h \
+    plataforma.h \
     puerta.h \
     radiacion.h \
     reactor.h \

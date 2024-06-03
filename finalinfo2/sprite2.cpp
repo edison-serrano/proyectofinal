@@ -1,4 +1,8 @@
 #include "sprite2.h"
+#include "plataforma.h"
+#include <QGraphicsScene>
+#include <QList>
+
 
 Sprite2::Sprite2(QGraphicsItem* parent)
     : QGraphicsPixmapItem(parent),
@@ -39,14 +43,49 @@ void Sprite2::startParabolicMovement() {
 
 void Sprite2::moveParabolic() {
     if (parabolicStep <= parabolicDuration) {
-        double t = (double)parabolicStep / parabolicDuration;
-        double newX = x() + 2; // Mover hacia la derecha con una velocidad constante (ajusta según sea necesario)
-        double newY = initialY - 4 * parabolicHeight * t * (1 - t); // Calcular la posición en el eje Y
-        setPos(newX, newY); // Actualizar la posición del sprite en ambos ejes
-        parabolicStep++;
-        QTimer::singleShot(30, this, &Sprite2::moveParabolic);  // Ajustar la duración del paso
+        double t = static_cast<double>(parabolicStep) / parabolicDuration;
+        double newX = x() + 2; // Ajusta esto si deseas que se mueva más rápido horizontalmente
+        double newY = initialY - 8 * parabolicHeight * t * (1 - t);
+
+        bool onPlatform = false;
+        QList<QGraphicsItem *> collidingItemsList = scene()->collidingItems(this);
+        foreach (QGraphicsItem *item, collidingItemsList) {
+            if (Plataforma *plataforma = dynamic_cast<Plataforma*>(item)) {
+                QRectF platformRect = plataforma->boundingRect().translated(plataforma->pos());
+                QRectF spriteRect(newX, newY, boundingRect().width(), boundingRect().height());
+                if (spriteRect.intersects(platformRect)) {
+                    newY = plataforma->y() - boundingRect().height();
+                    onPlatform = true;
+                    break;
+                }
+            }
+        }
+
+        setPos(newX, newY);
+
+        if (!onPlatform) {
+            parabolicStep++;
+        } else {
+            parabolicMoving = false;
+        }
+
+        QTimer::singleShot(8, this, &Sprite2::moveParabolic); // Ajustar el intervalo para una caída más suave
     } else {
         parabolicMoving = false;
     }
 }
 
+bool Sprite2::checkPlatformCollision(double newX, double newY)
+{
+    QRectF newRect(newX, newY, boundingRect().width(), boundingRect().height());
+    QList<QGraphicsItem *> collidingItemsList = scene()->collidingItems(this);
+    foreach (QGraphicsItem *item, collidingItemsList) {
+        if (Plataforma *plataforma = dynamic_cast<Plataforma *>(item)) {
+            QRectF platformRect = plataforma->boundingRect().translated(plataforma->pos());
+            if (newRect.intersects(platformRect)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}

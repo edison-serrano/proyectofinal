@@ -15,6 +15,7 @@ public:
     Sprite2(QGraphicsItem* parent = nullptr);
     void startAnimation();
     void startParabolicMovement();
+    bool checkPlatformCollision(double newX, double newY);
 
 private slots:
     void updateFrame();

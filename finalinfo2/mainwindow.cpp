@@ -10,6 +10,7 @@
 #include "reactor.h"
 #include "radiacion.h"
 #include "sprite2.h"
+#include "plataforma.h"
 #include "pendulo.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -17,10 +18,19 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     scene2Initialized(false),
     nextLevelActivated(false)
+
 {
+
+    QTimer *collisionTimer = new QTimer(this);
+    connect(collisionTimer, &QTimer::timeout, this, &MainWindow::checkCollisions);
+    connect(collisionTimer, &QTimer::timeout, this, &MainWindow::updateSprite2Position);
+    collisionTimer->start(100);
+
     scene = new QGraphicsScene();
     scene->setSceneRect(0, 0, 775, 315);
     ui->setupUi(this);
+
+
 
     menu = new Menu();
     connect(menu, &Menu::iniciarJuegoSignal, this, &MainWindow::switchToGameScene);
@@ -129,9 +139,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     // Temporizador para verificar colisiones
-    QTimer *collisionTimer = new QTimer(this);
-    connect(collisionTimer, &QTimer::timeout, this, &MainWindow::checkCollisions);
-    collisionTimer->start(100);
+    //QTimer *collisionTimer = new QTimer(this);
+    //connect(collisionTimer, &QTimer::timeout, this, &MainWindow::checkCollisions);
+    //collisionTimer->start(100);
 
 }
 
@@ -157,6 +167,8 @@ void MainWindow::setupScene2()
     QPixmap background(":/Background.png");
     scene2->setBackgroundBrush(QBrush(background));
 
+
+    /*
     // Plataformas
     paredes.push_back(new pared(100, 250, 50, 10, QColor(0, 255, 0))); // Plataforma 1, color verde radioactivo
     scene2->addItem(paredes.back());
@@ -217,6 +229,38 @@ void MainWindow::setupScene2()
     scene2->addItem(paredes.back());
 
     setupExternalWalls(scene2);
+*/
+
+    // Crear una instancia de Plataforma y agregarla a la escena2
+    Plataforma *plataforma = new Plataforma();
+    plataforma->setPos(100, 343); // Establece la posición de la plataforma
+    scene2->addItem(plataforma);
+
+    Plataforma *plataforma1 = new Plataforma();
+    plataforma1->setPos(132, 343); // Establece la posición de la plataforma
+    scene2->addItem(plataforma1);
+
+    Plataforma *plataforma2a = new Plataforma();
+    plataforma2a->setPos(163, 320); // Establece la posición de la plataforma
+    scene2->addItem(plataforma2a);
+
+    Plataforma *plataforma2b = new Plataforma();
+    plataforma2b->setPos(190, 320); // Establece la posición de la plataforma
+    scene2->addItem(plataforma2b);
+
+
+
+    Plataforma *plataformasuelo = new Plataforma();
+    plataformasuelo->setPos(0, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo);
+
+    Plataforma *plataformasuelo1 = new Plataforma();
+    plataformasuelo1->setPos(31, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo1);
+
+    Plataforma *plataformasuelo2 = new Plataforma();
+    plataformasuelo2->setPos(69, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo2);
 
     // Agregar sprite animado
     sprite2 = new Sprite2();
@@ -251,7 +295,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     case Qt::Key_A:
         if (ui->graphicsView->scene() == scene2) {
             newX_sprite2 -= 2;  // Mover sprite2 hacia la izquierda
-            sprite2->setPos(newX_sprite2, newY_sprite2);
+            if (!checkPlatformCollision(sprite2, newX_sprite2, newY_sprite2)) {
+                sprite2->setPos(newX_sprite2, newY_sprite2);
+            }
         } else {
             newX -= 2;  // Mover Yuri hacia la izquierda
             Yuri->setDirection(sprite::Left);  // Cambiar dirección
@@ -260,7 +306,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     case Qt::Key_D:
         if (ui->graphicsView->scene() == scene2) {
             newX_sprite2 += 2;  // Mover sprite2 hacia la derecha
-            sprite2->setPos(newX_sprite2, newY_sprite2);
+            if (!checkPlatformCollision(sprite2, newX_sprite2, newY_sprite2)) {
+                sprite2->setPos(newX_sprite2, newY_sprite2);
+            }
         } else {
             newX += 2;  // Mover Yuri hacia la derecha
             Yuri->setDirection(sprite::Right);  // Cambiar dirección
@@ -311,6 +359,48 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         QTimer::singleShot(1000, this, &MainWindow::switchToNextScene); // Cambiar de escena después de 1 segundo
         nextLevelActivated = true;
     }
+}
+
+void MainWindow::updateSprite2Position() {
+    if (ui->graphicsView->scene() == scene2) {
+        int newX_sprite2 = sprite2->x();
+        int newY_sprite2 = sprite2->y() + 2; // Ajustar la velocidad de caída
+
+        bool onPlatform = false;
+        QList<QGraphicsItem *> collidingItemsList = scene2->collidingItems(sprite2);
+        foreach (QGraphicsItem *item, collidingItemsList) {
+            if (Plataforma *plataforma = dynamic_cast<Plataforma*>(item)) {
+                QRectF platformRect = plataforma->boundingRect().translated(plataforma->pos());
+                QRectF spriteRect(newX_sprite2, newY_sprite2, sprite2->boundingRect().width(), sprite2->boundingRect().height());
+                if (spriteRect.intersects(platformRect)) {
+                    newY_sprite2 = plataforma->y() - sprite2->boundingRect().height();
+                    onPlatform = true;
+                    break;
+                }
+            }
+        }
+
+        sprite2->setPos(newX_sprite2, newY_sprite2);
+
+        if (!onPlatform) {
+            QTimer::singleShot(2, this, &MainWindow::updateSprite2Position); // Ajustar el intervalo para una actualización más suave
+        }
+    }
+}
+
+
+bool MainWindow::checkPlatformCollision(Sprite2 *sprite, int newX, int newY)
+{
+    QRectF newRect(newX, newY, sprite->boundingRect().width(), sprite->boundingRect().height());
+    foreach (QGraphicsItem *item, sprite->collidingItems()) {
+        if (Plataforma *plataforma = dynamic_cast<Plataforma *>(item)) {
+            QRectF platformRect = plataforma->boundingRect().translated(plataforma->pos());
+            if (newRect.intersects(platformRect)) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 void MainWindow::closeDoor(puerta *p)
