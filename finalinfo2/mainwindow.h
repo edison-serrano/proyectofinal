@@ -32,6 +32,8 @@ public:
 
     // Agrega la declaración del método hideButtons
     void hideButtons();
+    bool checkPlatformCollision(Sprite2 *sprite, int newX, int newY);
+    void updateSprite2Position();
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
