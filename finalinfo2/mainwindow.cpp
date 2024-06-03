@@ -17,7 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     scene2Initialized(false),
-    nextLevelActivated(false)
+    nextLevelActivated(false),
+    numeroDeObjetos(0)
 
 {
 
@@ -90,6 +91,13 @@ MainWindow::MainWindow(QWidget *parent) :
     inventario = new Inventario();
     inventario->setPos(50, 50);  // Ajusta la posición según sea necesario
     scene->addItem(inventario);
+
+
+    // Crear y agregar un QLabel para mostrar el número de objetos en el inventario
+    inventarioLabel = new QLabel(this);
+    actualizarInventarioLabel();
+    inventarioLabel->setGeometry(10, 50, 200, 30); // Ajusta la posición y tamaño según sea necesario
+    inventarioLabel->show();
 
 
     // Crear y agregar un enemigo a la scene
@@ -360,12 +368,16 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
     // Verificar colisión con inventario
     if (Yuri->collidesWithItem(inventario)) {
-        // Manejar la colisión (por ejemplo, recoger el inventario)
-        // Puedes eliminar el inventario de la escena
+        // Incrementar el número de objetos en el inventario
+        numeroDeObjetos++;
+        // Actualizar el QLabel
+        actualizarInventarioLabel();
+        // Eliminar el inventario de la escena
         scene->removeItem(inventario);
         delete inventario;
-        inventario = nullptr;  // Elimina el puntero para evitar uso posterior
+        inventario = nullptr;  // Eliminar el puntero para evitar uso posterior
     }
+
 
 
     // Verificar colisión con pasarnivel
@@ -375,6 +387,12 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         nextLevelActivated = true;
     }
 }
+
+void MainWindow::actualizarInventarioLabel() {
+    inventarioLabel->setText(QString("Objetos: %1").arg(numeroDeObjetos));
+}
+
+
 
 void MainWindow::updateSprite2Position() {
     if (ui->graphicsView->scene() == scene2) {

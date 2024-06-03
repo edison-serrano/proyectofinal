@@ -61,6 +61,10 @@ private:
     bool nextLevelActivated;
     Inventario* inventario;
 
+    int numeroDeObjetos;
+    QLabel *inventarioLabel;
+    void actualizarInventarioLabel();
+
     Menu *menu; // Agregar instancia de Menu como miembro privado
 
 private slots:
