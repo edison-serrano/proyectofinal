@@ -86,6 +86,11 @@ MainWindow::MainWindow(QWidget *parent) :
     reactor->setPos(600, 230);
     scene->addItem(reactor);
 
+    // Crear y agregar el inventario a la escena principal
+    inventario = new Inventario();
+    inventario->setPos(50, 50);  // Ajusta la posición según sea necesario
+    scene->addItem(inventario);
+
 
     // Crear y agregar un enemigo a la scene
     enemigo *nuevoEnemigo = new enemigo(640, 280, 30, 10); // posición, tamaño 30, velocidad 10
@@ -352,6 +357,16 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             break;
         }
     }
+
+    // Verificar colisión con inventario
+    if (Yuri->collidesWithItem(inventario)) {
+        // Manejar la colisión (por ejemplo, recoger el inventario)
+        // Puedes eliminar el inventario de la escena
+        scene->removeItem(inventario);
+        delete inventario;
+        inventario = nullptr;  // Elimina el puntero para evitar uso posterior
+    }
+
 
     // Verificar colisión con pasarnivel
     if (Yuri->collidesWithItem(nextLevelTrigger) && !nextLevelActivated) {

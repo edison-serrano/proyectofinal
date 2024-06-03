@@ -16,7 +16,8 @@
 #include "puerta.h"
 #include "pasarnivel.h"
 #include "enemigo.h"
-#include "menu.h" // Agregar la inclusión de menu.h
+#include "menu.h"
+#include "inventario.h"
 
 namespace Ui {
 class MainWindow;
@@ -58,6 +59,7 @@ private:
     Sprite2 *sprite2;
     bool scene2Initialized;
     bool nextLevelActivated;
+    Inventario* inventario;
 
     Menu *menu; // Agregar instancia de Menu como miembro privado
 

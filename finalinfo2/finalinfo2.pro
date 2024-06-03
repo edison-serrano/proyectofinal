@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     enemigo.cpp \
+    inventario.cpp \
     main.cpp \
     mainwindow.cpp \
     menu.cpp \
@@ -26,6 +27,7 @@ SOURCES += \
 
 HEADERS += \
     enemigo.h \
+    inventario.h \
     mainwindow.h \
     menu.h \
     parabolico.h \
