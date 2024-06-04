@@ -30,8 +30,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
     scene = new QGraphicsScene();
     scene->setSceneRect(0, 0, 775, 315);
-    ui->setupUi(this);
 
+    // Cargar la imagen del fondo desde el archivo de recursos y reducir su tamaño
+    QPixmap fondo(":/baldosa.png");
+    fondo = fondo.scaledToWidth(100); // Aquí puedes ajustar el tamaño de la imagen reducida
+
+    // Crear un patrón de repetición para la imagen de fondo
+    QBrush brush(fondo);
+
+    // Establecer el patrón de repetición como fondo de la escena
+    scene->setBackgroundBrush(brush);
+
+    ui->setupUi(this);
 
 
     menu = new Menu();
@@ -225,7 +235,7 @@ void MainWindow::setupScene2()
 
     paredes.push_back(new pared(70, 350, 50, 10, QColor(0, 255, 0))); // Plataforma 3
     scene2->addItem(paredes.back());
-
+*/
     paredes.push_back(new pared(310, 260, 160, 10)); // Pared horizontal centro inferior
     scene2->addItem(paredes.back());
 
@@ -252,7 +262,7 @@ void MainWindow::setupScene2()
     scene2->addItem(paredes.back());
 
     setupExternalWalls(scene2);
-*/
+
 
     // Crear una instancia de Plataforma y agregarla a la escena2
     Plataforma *plataforma = new Plataforma();
@@ -271,8 +281,6 @@ void MainWindow::setupScene2()
     plataforma2b->setPos(190, 320); // Establece la posición de la plataforma
     scene2->addItem(plataforma2b);
 
-
-
     Plataforma *plataformasuelo = new Plataforma();
     plataformasuelo->setPos(0, 390); // Establece la posición de la plataforma
     scene2->addItem(plataformasuelo);
@@ -282,8 +290,49 @@ void MainWindow::setupScene2()
     scene2->addItem(plataformasuelo1);
 
     Plataforma *plataformasuelo2 = new Plataforma();
-    plataformasuelo2->setPos(69, 390); // Establece la posición de la plataforma
+    plataformasuelo2->setPos(281, 390); // Establece la posición de la plataforma
     scene2->addItem(plataformasuelo2);
+
+    Plataforma *plataformasuelo3 = new Plataforma();
+    plataformasuelo3->setPos(250, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo3);
+
+
+    Plataforma *plataformaup = new Plataforma();
+    plataformaup->setPos(310, 260); // Establece la posición de la plataforma
+    scene2->addItem(plataformaup);
+
+    Plataforma *plataformaup2 = new Plataforma();
+    plataformaup2->setPos(338, 260); // Establece la posición de la plataforma
+    scene2->addItem(plataformaup2);
+
+    Plataforma *plataformaup3 = new Plataforma();
+    plataformaup3->setPos(366, 260); // Establece la posición de la plataforma
+    scene2->addItem(plataformaup3);
+
+    Plataforma *plataformaup4 = new Plataforma();
+    plataformaup4->setPos(394, 260); // Establece la posición de la plataforma
+    scene2->addItem(plataformaup4);
+
+    Plataforma *plataformaup5 = new Plataforma();
+    plataformaup5->setPos(422, 260); // Establece la posición de la plataforma
+    scene2->addItem(plataformaup5);
+
+    Plataforma *plataformaup6 = new Plataforma();
+    plataformaup6->setPos(450, 260); // Establece la posición de la plataforma
+    scene2->addItem(plataformaup6);
+
+    Plataforma *plataformaizq = new Plataforma();
+    plataformaizq->setPos(0, 195); // Establece la posición de la plataforma
+    scene2->addItem(plataformaizq);
+
+    Plataforma *plataformaizq2 = new Plataforma();
+    plataformaizq2->setPos(28, 195); // Establece la posición de la plataforma
+    scene2->addItem(plataformaizq2);
+
+    Plataforma *plataformaizq3 = new Plataforma();
+    plataformaizq3->setPos(56, 195); // Establece la posición de la plataforma
+    scene2->addItem(plataformaizq3);
 
     // Agregar sprite animado
     sprite2 = new Sprite2();
@@ -414,7 +463,7 @@ void MainWindow::actualizarInventarioLabel() {
 void MainWindow::updateSprite2Position() {
     if (ui->graphicsView->scene() == scene2) {
         int newX_sprite2 = sprite2->x();
-        int newY_sprite2 = sprite2->y() + 2; // Ajustar la velocidad de caída
+        int newY_sprite2 = sprite2->y() +2; // Ajustar la velocidad de caída
 
         bool onPlatform = false;
         QList<QGraphicsItem *> collidingItemsList = scene2->collidingItems(sprite2);
