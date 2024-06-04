@@ -19,7 +19,7 @@ QRectF puerta::boundingRect() const
 
 void puerta::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setBrush(Qt::yellow); // Color de la puerta
-    painter->setPen(Qt::yellow);
+    painter->setBrush(Qt::green); // Color de la puerta
+    painter->setPen(Qt::green);
     painter->drawRect(boundingRect());
 }

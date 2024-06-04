@@ -13,7 +13,7 @@ Sprite2::Sprite2(QGraphicsItem* parent)
     scaleFactor(0.3),
     parabolicMoving(false), // Inicializar la variable
     parabolicStep(0),
-    parabolicHeight(50),  // Altura del salto
+    parabolicHeight(40),  // Altura del salto
     parabolicDuration(30)  // Duración del salto
 {
     spriteSheet.load(":/sprite2.png");  // Ensure the path is correct
@@ -69,7 +69,7 @@ void Sprite2::moveParabolic() {
             parabolicMoving = false;
         }
 
-        QTimer::singleShot(8, this, &Sprite2::moveParabolic); // Ajustar el intervalo para una caída más suave
+        QTimer::singleShot(12, this, &Sprite2::moveParabolic); // Ajustar el intervalo para una caída más suave
     } else {
         parabolicMoving = false;
     }
