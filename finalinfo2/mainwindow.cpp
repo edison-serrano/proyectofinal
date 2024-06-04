@@ -281,8 +281,6 @@ void MainWindow::setupScene2()
     plataforma2b->setPos(190, 320); // Establece la posición de la plataforma
     scene2->addItem(plataforma2b);
 
-
-
     Plataforma *plataformasuelo = new Plataforma();
     plataformasuelo->setPos(0, 390); // Establece la posición de la plataforma
     scene2->addItem(plataformasuelo);
@@ -292,8 +290,49 @@ void MainWindow::setupScene2()
     scene2->addItem(plataformasuelo1);
 
     Plataforma *plataformasuelo2 = new Plataforma();
-    plataformasuelo2->setPos(69, 390); // Establece la posición de la plataforma
+    plataformasuelo2->setPos(281, 390); // Establece la posición de la plataforma
     scene2->addItem(plataformasuelo2);
+
+    Plataforma *plataformasuelo3 = new Plataforma();
+    plataformasuelo3->setPos(250, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo3);
+
+
+    Plataforma *plataformaup = new Plataforma();
+    plataformaup->setPos(310, 260); // Establece la posición de la plataforma
+    scene2->addItem(plataformaup);
+
+    Plataforma *plataformaup2 = new Plataforma();
+    plataformaup2->setPos(338, 260); // Establece la posición de la plataforma
+    scene2->addItem(plataformaup2);
+
+    Plataforma *plataformaup3 = new Plataforma();
+    plataformaup3->setPos(366, 260); // Establece la posición de la plataforma
+    scene2->addItem(plataformaup3);
+
+    Plataforma *plataformaup4 = new Plataforma();
+    plataformaup4->setPos(394, 260); // Establece la posición de la plataforma
+    scene2->addItem(plataformaup4);
+
+    Plataforma *plataformaup5 = new Plataforma();
+    plataformaup5->setPos(422, 260); // Establece la posición de la plataforma
+    scene2->addItem(plataformaup5);
+
+    Plataforma *plataformaup6 = new Plataforma();
+    plataformaup6->setPos(450, 260); // Establece la posición de la plataforma
+    scene2->addItem(plataformaup6);
+
+    Plataforma *plataformaizq = new Plataforma();
+    plataformaizq->setPos(0, 195); // Establece la posición de la plataforma
+    scene2->addItem(plataformaizq);
+
+    Plataforma *plataformaizq2 = new Plataforma();
+    plataformaizq2->setPos(28, 195); // Establece la posición de la plataforma
+    scene2->addItem(plataformaizq2);
+
+    Plataforma *plataformaizq3 = new Plataforma();
+    plataformaizq3->setPos(56, 195); // Establece la posición de la plataforma
+    scene2->addItem(plataformaizq3);
 
     // Agregar sprite animado
     sprite2 = new Sprite2();
