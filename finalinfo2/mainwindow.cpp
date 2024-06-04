@@ -30,8 +30,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
     scene = new QGraphicsScene();
     scene->setSceneRect(0, 0, 775, 315);
-    ui->setupUi(this);
 
+    // Cargar la imagen del fondo desde el archivo de recursos y reducir su tamaño
+    QPixmap fondo(":/baldosa.png");
+    fondo = fondo.scaledToWidth(100); // Aquí puedes ajustar el tamaño de la imagen reducida
+
+    // Crear un patrón de repetición para la imagen de fondo
+    QBrush brush(fondo);
+
+    // Establecer el patrón de repetición como fondo de la escena
+    scene->setBackgroundBrush(brush);
+
+    ui->setupUi(this);
 
 
     menu = new Menu();
@@ -225,7 +235,7 @@ void MainWindow::setupScene2()
 
     paredes.push_back(new pared(70, 350, 50, 10, QColor(0, 255, 0))); // Plataforma 3
     scene2->addItem(paredes.back());
-
+*/
     paredes.push_back(new pared(310, 260, 160, 10)); // Pared horizontal centro inferior
     scene2->addItem(paredes.back());
 
@@ -252,7 +262,7 @@ void MainWindow::setupScene2()
     scene2->addItem(paredes.back());
 
     setupExternalWalls(scene2);
-*/
+
 
     // Crear una instancia de Plataforma y agregarla a la escena2
     Plataforma *plataforma = new Plataforma();
@@ -414,7 +424,7 @@ void MainWindow::actualizarInventarioLabel() {
 void MainWindow::updateSprite2Position() {
     if (ui->graphicsView->scene() == scene2) {
         int newX_sprite2 = sprite2->x();
-        int newY_sprite2 = sprite2->y() + 2; // Ajustar la velocidad de caída
+        int newY_sprite2 = sprite2->y() +2; // Ajustar la velocidad de caída
 
         bool onPlatform = false;
         QList<QGraphicsItem *> collidingItemsList = scene2->collidingItems(sprite2);

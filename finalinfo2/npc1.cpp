@@ -3,6 +3,7 @@
 #include "npc1.h"
 #include <QGraphicsScene>
 #include "sprite.h"
+#include <QDebug>
 
 npc1::npc1(QGraphicsItem* parent)
     : QGraphicsPixmapItem(parent),
