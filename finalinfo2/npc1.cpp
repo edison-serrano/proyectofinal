@@ -1,8 +1,6 @@
-// npc1.cpp
-
 #include "npc1.h"
-#include <QGraphicsScene>
 #include "sprite.h"
+#include <QGraphicsScene>
 #include <QDebug>
 
 npc1::npc1(QGraphicsItem* parent)
@@ -25,7 +23,6 @@ void npc1::updateFrame() {
     setPixmap(spriteSheet.copy(x, 0, frameWidth, frameHeight));
 }
 
-
 void npc1::detectCollision(sprite *yuri)
 {
     if (collidesWithItem(yuri))
@@ -33,4 +30,8 @@ void npc1::detectCollision(sprite *yuri)
         qDebug() << "Colisión detectada con Yuri.";
         emit collisionOccurred(); // Emitir la señal cuando ocurre una colisión con Yuri
     }
+}
+
+QRectF npc1::boundingRect() const {
+    return QRectF(0, 0, frameWidth, frameHeight);
 }
