@@ -94,9 +94,9 @@ MainWindow::MainWindow(QWidget *parent) :
     Yuri->setPos(385, 195);
 
     // Crear un objeto npc1 y agregarlo a la escena
-    npc1Object = new npc1();
+    npc1Object = new npc1();  // Crear en el heap
     scene->addItem(npc1Object);
-    npc1Object->setPos(375, 125);
+    npc1Object->setPos(375, 125); // Nota el uso de -> en lugar de .
 
     // Conectar la señal collisionOccurred de npc1 con el slot showMessage
     connect(npc1Object, &npc1::collisionOccurred, this, &MainWindow::showMessage);
@@ -115,7 +115,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Crear y agregar un QLabel para mostrar el número de objetos en el inventario
     inventarioLabel = new QLabel(this);
     actualizarInventarioLabel();
-    inventarioLabel->setGeometry(10, 50, 200, 30); // Ajusta la posición y tamaño según sea necesario
+    inventarioLabel->setGeometry(300, 10, 200, 30); // Ajusta la posición y tamaño según sea necesario
     inventarioLabel->show();
 
 
@@ -170,11 +170,6 @@ MainWindow::MainWindow(QWidget *parent) :
     //setupExternalWalls(scene2);
     setupScene2();
 
-
-    // Temporizador para verificar colisiones
-    //QTimer *collisionTimer = new QTimer(this);
-    //connect(collisionTimer, &QTimer::timeout, this, &MainWindow::checkCollisions);
-    //collisionTimer->start(100);
 
 }
 
@@ -396,6 +391,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         return;
     }
 
+    // Verificar colisión con npc1
+    if (Yuri->collidesWithItem(npc1Object)) {
+        npc1Object->detectCollision(Yuri);
+    }
+
     // Verificar colisión
     if (!Yuri->checkCollision(newX, newY)) {
         Yuri->setPos(newX, newY);
@@ -445,6 +445,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         QTimer::singleShot(1000, this, &MainWindow::switchToNextScene); // Cambiar de escena después de 1 segundo
         nextLevelActivated = true;
     }
+
+
+
+
 }
 
 

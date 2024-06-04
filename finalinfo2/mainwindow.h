@@ -62,6 +62,8 @@ private:
     bool nextLevelActivated;
     Inventario* inventario;
     npc1 *npc1Object;
+    //npc1 npc1Object;
+
 
     int numeroDeObjetos;
     QLabel *inventarioLabel;
