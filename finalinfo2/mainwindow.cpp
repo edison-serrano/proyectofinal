@@ -352,8 +352,15 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
     switch (event->key()) {
     case Qt::Key_W:
-        newY -= 2;  // Mover hacia arriba
-        Yuri->setDirection(sprite::Up);  // Cambiar dirección
+        if (ui->graphicsView->scene() == scene2) {
+            newY_sprite2 -= 70;  // Mover sprite2 hacia la izquierda
+            if (!checkPlatformCollision(sprite2, newX_sprite2, newY_sprite2)) {
+                sprite2->setPos(newX_sprite2, newY_sprite2);
+            }
+        } else {
+            newY -= 2;  // Mover hacia arriba
+            Yuri->setDirection(sprite::Up);  // Cambiar dirección
+        }
         break;
     case Qt::Key_S:
         newY += 2;  // Mover hacia abajo
