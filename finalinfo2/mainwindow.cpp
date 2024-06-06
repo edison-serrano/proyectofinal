@@ -50,7 +50,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Conecta los botones del archivo .ui con las funciones correspondientes
     connect(ui->startGameButton, &QPushButton::clicked, this, &MainWindow::hideButtons);
     connect(ui->highScoreButton, &QPushButton::clicked, menu, &Menu::mostrarPuntajeMaximo);
-    connect(ui->quitButton, &QPushButton::clicked, this, &MainWindow::hideButtons);
+    connect(ui->quitButton, &QPushButton::clicked,  menu, &Menu::salir);
 
 
 
