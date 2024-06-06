@@ -3,6 +3,9 @@
 #include <QMessageBox>
 #include <QApplication>
 #include <QGraphicsPixmapItem> // Para agregar una imagen de fondo
+#include <QInputDialog>
+#include <QTextStream>
+#include <QFile>
 
 Menu::Menu(QObject *parent) : QObject(parent)
 {
@@ -32,10 +35,6 @@ Menu::Menu(QObject *parent) : QObject(parent)
     QGraphicsProxyWidget *proxyWidget = menuScene->addWidget(menu);
     proxyWidget->setPos(100, 100); // Posición del menú en la escena
 
-    // Agregar un fondo a la escena
-    QPixmap background(":/path/to/your/background/image.jpg"); // Cambia la ruta a la imagen de fondo
-    QGraphicsPixmapItem *backgroundItem = new QGraphicsPixmapItem(background);
-    menuScene->addItem(backgroundItem);
 }
 
 void Menu::iniciarJuego()
@@ -45,10 +44,42 @@ void Menu::iniciarJuego()
 
 void Menu::mostrarPuntajeMaximo()
 {
-    // Aquí puedes agregar la lógica para mostrar el puntaje máximo.
-    // Por ejemplo:
-    QMessageBox::information(nullptr, "Puntaje máximo", "Tu puntaje máximo es: X");
+    // Pedir al usuario que ingrese su nombre
+    QString nombre = QInputDialog::getText(nullptr, "Ingrese su nombre", "Nombre:");
+
+    // Obtener el puntaje máximo (reemplazar 'X' con el valor realR(FALTA CONFIGURA)
+    int puntajeMaximo = obtenerPuntajeMaximo();
+
+    // Mostrar el puntaje máximo
+    QMessageBox::information(nullptr, "Puntaje máximo", "Tu puntaje máximo es: " + QString::number(puntajeMaximo));
+
+    // Guardar el nombre del jugador y su puntaje máximo en el archivo
+    guardarJugador(nombre, puntajeMaximo);
 }
+
+int Menu::obtenerPuntajeMaximo()
+{
+    // Aquí implementa la lógica para obtener el puntaje máximo
+    return 100; // Cambiar por lógica real para obtener el puntaje máximo(FALTA)
+}
+
+void Menu::guardarJugador(const QString &nombre, int puntaje)
+{
+    // Abrir el archivo en modo de escritura (si no existe, se creará)
+    QFile file("../jugadores.txt");
+    if (file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text)) {
+        // Crear un stream de texto para escribir en el archivo
+        QTextStream stream(&file);
+        // Escribir el nombre del jugador y su puntaje en una línea del archivo
+        stream << nombre << " - Puntaje máximo: " << puntaje << endl;
+        // Cerrar el archivo
+        file.close();
+    } else {
+        // Manejar el caso en el que no se pudo abrir el archivo
+        QMessageBox::critical(nullptr, "Error", "No se pudo abrir el archivo para guardar el puntaje.");
+    }
+}
+
 
 void Menu::salir()
 {

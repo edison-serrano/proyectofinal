@@ -15,6 +15,10 @@ public:
     QMenu *menu;
     QGraphicsScene *menuScene;
 
+private:
+    int obtenerPuntajeMaximo();
+    void guardarJugador(const QString &nombre, int puntaje);
+
 
 signals:
     void iniciarJuegoSignal();
@@ -23,6 +27,8 @@ public slots:
     void iniciarJuego();
     void mostrarPuntajeMaximo();
     void salir();
+
+
 
 
 };
