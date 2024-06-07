@@ -475,9 +475,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         nextLevelActivated = true;
     }
 
-
-
-
 }
 
 
