@@ -373,7 +373,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     switch (event->key()) {
     case Qt::Key_W:
         if (ui->graphicsView->scene() == scene2) {
-            newY_sprite2 -= 70;  // Mover sprite2 hacia la izquierda
+            newY_sprite2 -= 70;  // Mover sprite2 hacia arriba
             if (!checkPlatformCollision(sprite2, newX_sprite2, newY_sprite2)) {
                 sprite2->setPos(newX_sprite2, newY_sprite2);
             }
@@ -388,6 +388,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         break;
     case Qt::Key_A:
         if (ui->graphicsView->scene() == scene2) {
+            sprite2->setFacingRight(false);  // Cambiar la dirección del sprite
             newX_sprite2 -= 2;  // Mover sprite2 hacia la izquierda
             if (!checkPlatformCollision(sprite2, newX_sprite2, newY_sprite2)) {
                 sprite2->setPos(newX_sprite2, newY_sprite2);
@@ -399,6 +400,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         break;
     case Qt::Key_D:
         if (ui->graphicsView->scene() == scene2) {
+            sprite2->setFacingRight(true);  // Cambiar la dirección del sprite
             newX_sprite2 += 2;  // Mover sprite2 hacia la derecha
             if (!checkPlatformCollision(sprite2, newX_sprite2, newY_sprite2)) {
                 sprite2->setPos(newX_sprite2, newY_sprite2);

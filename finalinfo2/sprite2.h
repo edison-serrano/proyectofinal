@@ -16,6 +16,7 @@ public:
     void startAnimation();
     void startParabolicMovement();
     bool checkPlatformCollision(double newX, double newY);
+    void setFacingRight(bool facingRight);  // Método para cambiar la dirección
 
 private slots:
     void updateFrame();
@@ -29,6 +30,8 @@ private:
     const int frameHeight;
     const int totalFrames;
     const float scaleFactor;
+
+    bool facingRight;  // Variable para almacenar la dirección actual
 
     // Variables para el movimiento parabólico
     bool parabolicMoving;
