@@ -12,14 +12,14 @@
 #include "radiacion.h"
 #include "sprite2.h"
 #include "plataforma.h"
-#include "pendulo.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     scene2Initialized(false),
     nextLevelActivated(false),
-    numeroDeObjetos(0)
+    numeroDeObjetos(0),
+    pendulo(new Pendulo(50.0, 0.5))
 
 {
 
@@ -144,6 +144,7 @@ MainWindow::MainWindow(QWidget *parent) :
     radiacion->setPos(50, 200);
     scene->addItem(radiacion);
 
+
     // Objeto pasarnivel
     nextLevelTrigger = new pasarnivel(150, 150, 15, 15);
     scene->addItem(nextLevelTrigger);
@@ -170,7 +171,23 @@ MainWindow::MainWindow(QWidget *parent) :
     scene2 = new QGraphicsScene();
     scene2->setSceneRect(0, 0, 775, 315);
     //setupExternalWalls(scene2);
+    Radiacion *radiacion2 = new Radiacion(":/radiacion.png", 192, 192, 5, 2, 100, scene2, &paredes); // 192x192 cada img, 5x4 en total, 100 ms por img
+    radiacion2->setPos(250, 200);
+    scene2->addItem(radiacion2);
+
+    Radiacion *radiacion3 = new Radiacion(":/radiacion.png", 192, 192, 5, 1, 100, scene2, &paredes); // 192x192 cada img, 5x4 en total, 100 ms por img
+    radiacion3->setPos(100, 20);
+    scene2->addItem(radiacion3);
     setupScene2();
+
+    // Agregar el péndulo a la escena 2
+    pendulo->setPos(150, 200); // Ajusta la posición según sea necesario
+    scene2->addItem(pendulo);
+
+    // Configurar un temporizador para actualizar el péndulo periódicamente
+    QTimer *timer2 = new QTimer(this);
+    connect(timer2, &QTimer::timeout, this, &MainWindow::actualizarPendulo);
+    timer2->start(16); // Actualizar aproximadamente cada 16 ms (~60 FPS)
 
 
 }
@@ -343,6 +360,7 @@ void MainWindow::setupScene2()
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete pendulo;
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
@@ -355,7 +373,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     switch (event->key()) {
     case Qt::Key_W:
         if (ui->graphicsView->scene() == scene2) {
-            newY_sprite2 -= 70;  // Mover sprite2 hacia la izquierda
+            newY_sprite2 -= 70;  // Mover sprite2 hacia arriba
             if (!checkPlatformCollision(sprite2, newX_sprite2, newY_sprite2)) {
                 sprite2->setPos(newX_sprite2, newY_sprite2);
             }
@@ -370,6 +388,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         break;
     case Qt::Key_A:
         if (ui->graphicsView->scene() == scene2) {
+            sprite2->setFacingRight(false);  // Cambiar la dirección del sprite
             newX_sprite2 -= 2;  // Mover sprite2 hacia la izquierda
             if (!checkPlatformCollision(sprite2, newX_sprite2, newY_sprite2)) {
                 sprite2->setPos(newX_sprite2, newY_sprite2);
@@ -381,6 +400,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         break;
     case Qt::Key_D:
         if (ui->graphicsView->scene() == scene2) {
+            sprite2->setFacingRight(true);  // Cambiar la dirección del sprite
             newX_sprite2 += 2;  // Mover sprite2 hacia la derecha
             if (!checkPlatformCollision(sprite2, newX_sprite2, newY_sprite2)) {
                 sprite2->setPos(newX_sprite2, newY_sprite2);
@@ -454,9 +474,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         QTimer::singleShot(1000, this, &MainWindow::switchToNextScene); // Cambiar de escena después de 1 segundo
         nextLevelActivated = true;
     }
-
-
-
 
 }
 
@@ -627,4 +644,8 @@ void MainWindow::restartGame()
             delete button;
         }
     }
+}
+
+void MainWindow::actualizarPendulo() {
+    pendulo->actualizar(0.16); // Actualizar con un paso de tiempo de 0.016 segundos (16 ms)
 }

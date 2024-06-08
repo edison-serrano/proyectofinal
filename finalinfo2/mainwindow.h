@@ -19,6 +19,7 @@
 #include "menu.h"
 #include "inventario.h"
 #include "npc1.h"
+#include"pendulo.h"
 
 namespace Ui {
 class MainWindow;
@@ -68,6 +69,7 @@ private:
     int numeroDeObjetos;
     QLabel *inventarioLabel;
     void actualizarInventarioLabel();
+    Pendulo *pendulo; // Objeto pendulo
 
     Menu *menu; // Agregar instancia de Menu como miembro privado
 
@@ -80,6 +82,7 @@ private slots:
     void restartGame();
     void switchToGameScene(); // Slot para cambiar a la escena del juego
     void showMessage();
+    void actualizarPendulo(); // Slot para actualizar el péndulo
 };
 
 #endif // MAINWINDOW_H
