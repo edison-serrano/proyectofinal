@@ -131,18 +131,126 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(timer, &QTimer::timeout, nuevoEnemigo, &enemigo::movimiento);
     timer->start(tiempoDeActualizacion); // Configura el tiempo de actualizacion
 
-    /*
+
     // Crear y agregar un enemigo a la scene
-    enemigo *nuevoEnemigo2 = new enemigo(500, 295, 25, 15); // posición, tamaño 30, velocidad 10
+    enemigo *nuevoEnemigo2 = new enemigo(360, 45, 35, 15); // posición, tamaño, velocidad
     scene->addItem(nuevoEnemigo2);
     connect(timer, &QTimer::timeout, nuevoEnemigo2, &enemigo::movimiento);
     timer->start(tiempoDeActualizacion); // Configura el tiempo de actualizacion
-*/
+
+
+//********************************************************************************
+
+    //escenario .. scene
+    QPixmap cajaAPixmap(":/caja1.png");
+    QGraphicsPixmapItem *cajaAItem = new QGraphicsPixmapItem(cajaAPixmap);
+    cajaAItem->setPos(10, 150);
+    scene->addItem(cajaAItem);
+
+    QGraphicsPixmapItem *cajaAItem2 = new QGraphicsPixmapItem(cajaAPixmap);
+    cajaAItem2->setPos(10, 120);
+    scene->addItem(cajaAItem2);
+
+    QGraphicsPixmapItem *cajaAItem3 = new QGraphicsPixmapItem(cajaAPixmap);
+    cajaAItem3->setPos(10, 90);
+    scene->addItem(cajaAItem3);
+
+    QPixmap cajaBPixmap(":/caja2.png");
+    QGraphicsPixmapItem *cajaBItem = new QGraphicsPixmapItem(cajaBPixmap);
+    cajaBItem->setPos(10, 60);
+    scene->addItem(cajaBItem);
+
+    QPixmap armarioPixmap(":/armario1.png");
+    QGraphicsPixmapItem *armarioItem = new QGraphicsPixmapItem(armarioPixmap);
+    armarioItem->setPos(60, 12);
+    scene->addItem(armarioItem);
+
+    QGraphicsPixmapItem *armario1Item = new QGraphicsPixmapItem(armarioPixmap);
+    armario1Item->setPos(90, 12);
+    scene->addItem(armario1Item);
+
+    QGraphicsPixmapItem *armario2Item = new QGraphicsPixmapItem(armarioPixmap);
+    armario2Item->setPos(120, 12);
+    scene->addItem(armario2Item);
+
+    QGraphicsPixmapItem *armario3Item = new QGraphicsPixmapItem(armarioPixmap);
+    armario3Item->setPos(150, 12);
+    scene->addItem(armario3Item);
+
+
+    // barriles
+
+
+    QPixmap barrilAPixmap(":/barril1.png");
+    QGraphicsPixmapItem *barrilItem = new QGraphicsPixmapItem(barrilAPixmap);
+    barrilItem->setPos(350, 45);
+    scene->addItem(barrilItem);
+
+    QGraphicsPixmapItem *barril1Item = new QGraphicsPixmapItem(barrilAPixmap);
+    barril1Item->setPos(320, 45);
+    scene->addItem(barril1Item);
+
+    QGraphicsPixmapItem *barril2Item = new QGraphicsPixmapItem(barrilAPixmap);
+    barril2Item->setPos(400, 35);
+    scene->addItem(barril2Item);
+
+    QGraphicsPixmapItem *barril3Item = new QGraphicsPixmapItem(barrilAPixmap);
+    barril3Item->setPos(400, 65);
+    scene->addItem(barril3Item);
+
+    //tuberias
+
+    QPixmap tuberiaPixmap(":/tuberia1.png");
+    QGraphicsPixmapItem *tuberiaItem = new QGraphicsPixmapItem(tuberiaPixmap);
+    tuberiaItem->setPos(720, 160);
+    scene->addItem(tuberiaItem);
+
+    QGraphicsPixmapItem *tuberia1Item = new QGraphicsPixmapItem(tuberiaPixmap);
+    tuberia1Item->setPos(720, 130);
+    scene->addItem(tuberia1Item);
+
+    QGraphicsPixmapItem *tuberia3Item = new QGraphicsPixmapItem(tuberiaPixmap);
+    tuberia3Item->setPos(720, 100);
+    scene->addItem(tuberia3Item);
+
+    QGraphicsPixmapItem *tuberia4Item = new QGraphicsPixmapItem(tuberiaPixmap);
+    tuberia4Item->setPos(720, 70);
+    scene->addItem(tuberia4Item);
+
+    QGraphicsPixmapItem *tuberia5Item = new QGraphicsPixmapItem(tuberiaPixmap);
+    tuberia5Item->setPos(690, 100);
+    tuberia5Item->setRotation(-90);
+    scene->addItem(tuberia5Item);
+
+    QGraphicsPixmapItem *tuberia6Item = new QGraphicsPixmapItem(tuberiaPixmap);
+    tuberia6Item->setPos(640, 100);
+    tuberia6Item->setRotation(-90);
+    scene->addItem(tuberia6Item);
+
+    QGraphicsPixmapItem *tuberia7Item = new QGraphicsPixmapItem(tuberiaPixmap);
+    tuberia7Item->setPos(610, 100);
+    tuberia7Item->setRotation(-90);
+    scene->addItem(tuberia7Item);
+
+    QGraphicsPixmapItem *tuberia8Item = new QGraphicsPixmapItem(tuberiaPixmap);
+    tuberia8Item->setPos(580, 100);
+    tuberia8Item->setRotation(-90);
+    scene->addItem(tuberia8Item);
+
+
+//*******************************************************************************
+
+
 
     // Agregar sprite radiacion.png con animación y movimiento aleatorio
     Radiacion *radiacion = new Radiacion(":/radiacion.png", 192, 192, 5, 4, 100, scene, &paredes); // 192x192 cada img, 5x4 en total, 100 ms por img
     radiacion->setPos(50, 200);
     scene->addItem(radiacion);
+
+    // Agregar sprite radiacion.png con animación y movimiento aleatorio
+    Radiacion *radiacion1 = new Radiacion(":/radiacion.png", 192, 192, 5, 4, 100, scene, &paredes); // 192x192 cada img, 5x4 en total, 100 ms por img
+    radiacion1->setPos(580, -50);
+    scene->addItem(radiacion1);
 
 
     // Objeto pasarnivel
@@ -562,9 +670,6 @@ void MainWindow::switchToNextScene()
 
         scene2Initialized = true; // Marcar scene2 como inicializada
 
-        // Agregar Yuri a la escena2 solo si no ha sido inicializada
-        //scene2->addItem(Yuri);
-        //Yuri->setPos(25, 374); // Resetear la posición de Yuri en la nueva escena
     }
 }
 

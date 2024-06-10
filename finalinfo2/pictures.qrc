@@ -10,5 +10,10 @@
         <file>inv1.png</file>
         <file>npc1.png</file>
         <file>baldosa.png</file>
+        <file>caja1.png</file>
+        <file>caja2.png</file>
+        <file>armario1.png</file>
+        <file>barril1.png</file>
+        <file>tuberia1.png</file>
     </qresource>
 </RCC>

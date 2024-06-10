@@ -54,3 +54,5 @@ void Radiacion::moveRandomly() {
         setPos(newPos);
     }
 }
+
+
