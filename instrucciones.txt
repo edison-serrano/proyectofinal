@@ -1,0 +1,30 @@
+Hola YURI bienvenido, en este instante se esta realizando una prueba a los reactores
+y puede salir muy mal, necesitamos buscar los objetos necesarios para detener la prueba.
+Al parecer el personal administrativo no sabe que los reactores están fallando.
+			¡¡Ayudanos!!
+
+    Objetivo: 
+    	* Explora Chernobyl, encuentra 5 objetos ocultos y pasa al siguiente nivel.
+
+    Controles:
+        * Usa las teclas de dirección (W, A, S, D) del teclado para moverte.
+
+    Explora:
+        * Busca objetos en cada habitación.
+        * Evita las partículas de radiación roja y la nube tóxica azul.
+        * Mantente alejado del reactor para evitar la exposición a la radiación.
+
+    Salud y Peligros:
+        * Tu vida disminuirá al acercarte a la radiación, la nube tóxica y el reactor.
+        * Encuentra botiquines para recuperar salud y aumentar tu resistencia.
+
+    Objetos:
+        * Encuentra los 5 objetos ocultos para desbloquear la puerta de salida.
+
+    Niveles:
+        * Supera niveles más difíciles a medida que avanzas.
+
+    Completa el juego:
+        * Completa todos los niveles y escapa de Chernobyl.
+
+¡Recuerda tener cuidado con la radiación y los peligros del reactor mientras exploras Chernobyl!
