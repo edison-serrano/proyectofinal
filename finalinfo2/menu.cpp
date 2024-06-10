@@ -71,7 +71,7 @@ void Menu::guardarJugador(const QString &nombre, int puntaje)
         // Crear un stream de texto para escribir en el archivo
         QTextStream stream(&file);
         // Escribir el nombre del jugador y su puntaje en una línea del archivo
-        stream << nombre << " - Puntaje máximo: " << puntaje << endl;
+        stream << nombre << " - Puntaje máximo: " << puntaje << Qt::endl;
         // Cerrar el archivo
         file.close();
     } else {
