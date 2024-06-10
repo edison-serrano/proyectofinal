@@ -7,6 +7,9 @@
 #include <QPushButton>
 #include <QGraphicsPixmapItem>
 #include <QMessageBox>
+#include <QFile>
+#include <QTextStream>
+#include <QVBoxLayout>
 #include "enemigo.h"
 #include "reactor.h"
 #include "radiacion.h"
@@ -485,6 +488,8 @@ void MainWindow::setupScene2()
 
 }
 
+//**************************************************************************************
+
 void MainWindow::checkCollisionForMessage() {
     // Verificar si Yuri está en colisión con NPC1 y el mensaje no se ha mostrado previamente
     if (Yuri->collidesWithItem(npc1Object) && !messageShown) {
@@ -493,8 +498,36 @@ void MainWindow::checkCollisionForMessage() {
 }
 
 void MainWindow::showMessage() {
-    // Mostrar el mensaje
-    QMessageBox::information(this, "Mensaje", "Hola Yuri");
+    QFile file("../instrucciones.txt");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "No se pudo abrir el archivo de instrucciones.";
+        return;
+    }
+
+    // Leer el contenido del archivo de instrucciones
+    QTextStream in(&file);
+    QString message = in.readAll();
+
+    // Cerrar el archivo
+    file.close();
+
+    // Crear un cuadro de diálogo personalizado
+    QDialog dialog(this);
+    QVBoxLayout layout(&dialog);
+    QLabel label(&dialog);
+    label.setText(message);
+    layout.addWidget(&label);
+    QPushButton nextButton("Siguiente", &dialog);
+    layout.addWidget(&nextButton);
+    dialog.setLayout(&layout);
+
+    // Conectar el botón "Siguiente" para cerrar el cuadro de diálogo
+    connect(&nextButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+
+    // Mostrar el cuadro de diálogo
+    dialog.setWindowTitle("Instrucciones");
+    dialog.exec();
+
     messageShown = true; // Establecer la bandera a true para indicar que el mensaje se ha mostrado
     // Iniciar el temporizador para esperar 10 segundos antes de restablecer la bandera
     messageTimer->start(10000); // 10 segundos
@@ -519,7 +552,7 @@ void MainWindow::resetMessageTimer() {
     }
     messageShown = false; // Restablecer la bandera cuando el temporizador termina
 }
-
+//*******************************************************************************
 
 
 
