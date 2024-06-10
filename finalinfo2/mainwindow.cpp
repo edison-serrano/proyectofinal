@@ -117,11 +117,33 @@ MainWindow::MainWindow(QWidget *parent) :
     Reactor *reactor = new Reactor(":/reactor.png", 96, 96, 16, 100); // 96x96 cada img, 16 en total, 100 ms por img
     reactor->setPos(600, 230);
     scene->addItem(reactor);
+//**************************************************************************
+    inventario2 = nullptr;
 
     // Crear y agregar el inventario a la escena principal
     inventario = new Inventario();
-    inventario->setPos(50, 50);  // Ajusta la posición según sea necesario
+    inventario->setPos(50, 50);  // Ajusta la posición
     scene->addItem(inventario);
+
+    // Crear y agregar el segundo inventario a la escena principal
+    inventario2 = new Inventario();
+    inventario2->setPos(50, 100);  // Ajusta la posición
+    scene->addItem(inventario2);
+
+    // Crear y agregar el segundo inventario a la escena principal
+    inventario3 = new Inventario();
+    inventario3->setPos(60, 100);  // Ajusta la posición
+    scene->addItem(inventario3);
+
+    // Crear y agregar el segundo inventario a la escena principal
+    inventario4 = new Inventario();
+    inventario4->setPos(90, 100);  // Ajusta la posición
+    scene->addItem(inventario4);
+
+    // Crear y agregar el segundo inventario a la escena principal
+    inventario5 = new Inventario();
+    inventario5->setPos(100, 100);  // Ajusta la posición
+    scene->addItem(inventario5);
 
 
     // Crear y agregar un QLabel para mostrar el número de objetos en el inventario
@@ -130,7 +152,7 @@ MainWindow::MainWindow(QWidget *parent) :
     inventarioLabel->setGeometry(300, 10, 200, 30); // Ajusta la posición y tamaño según sea necesario
     inventarioLabel->show();
 
-
+//***************************************************************************************
     // Crear y agregar un enemigo a la scene
     enemigo *nuevoEnemigo = new enemigo(640, 280, 30, 10); // posición, tamaño 30, velocidad 10
     scene->addItem(nuevoEnemigo);
@@ -652,7 +674,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         }
     }
 
-    // Verificar colisión con inventario
+
+    //**************************************************************
+    // Verificar colisión con inventario1
     if (Yuri->collidesWithItem(inventario)) {
         // Incrementar el número de objetos en el inventario
         numeroDeObjetos++;
@@ -664,14 +688,69 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         inventario = nullptr;  // Eliminar el puntero para evitar uso posterior
     }
 
+    // Verificar colisión con inventario2
+    if (Yuri->collidesWithItem(inventario2)) {
+        // Incrementar el número de objetos en el inventario
+        numeroDeObjetos++;
+        // Actualizar el QLabel
+        actualizarInventarioLabel();
+        // Eliminar el inventario de la escena
+        scene->removeItem(inventario2);
+        delete inventario2;
+        inventario2 = nullptr;  // Eliminar el puntero para evitar uso posterior
+    }
+
+    // Verificar colisión con inventario3
+    if (Yuri->collidesWithItem(inventario3)) {
+        // Incrementar el número de objetos en el inventario
+        numeroDeObjetos++;
+        // Actualizar el QLabel
+        actualizarInventarioLabel();
+        // Eliminar el inventario de la escena
+        scene->removeItem(inventario3);
+        delete inventario3;
+        inventario3 = nullptr;  // Eliminar el puntero para evitar uso posterior
+    }
+
+    // Verificar colisión con inventario4
+    if (Yuri->collidesWithItem(inventario4)) {
+        // Incrementar el número de objetos en el inventario
+        numeroDeObjetos++;
+        // Actualizar el QLabel
+        actualizarInventarioLabel();
+        // Eliminar el inventario de la escena
+        scene->removeItem(inventario4);
+        delete inventario4;
+        inventario4 = nullptr;  // Eliminar el puntero para evitar uso posterior
+    }
+
+    // Verificar colisión con inventario5
+    if (Yuri->collidesWithItem(inventario5)) {
+        // Incrementar el número de objetos en el inventario
+        numeroDeObjetos++;
+        // Actualizar el QLabel
+        actualizarInventarioLabel();
+        // Eliminar el inventario de la escena
+        scene->removeItem(inventario5);
+        delete inventario5;
+        inventario5 = nullptr;  // Eliminar el puntero para evitar uso posterior
+    }
+
+
+    //***********************************************************************************
+
     // Verificar colisión con pasarnivel
     if (Yuri->collidesWithItem(nextLevelTrigger) && !nextLevelActivated) {
-        nextLevelLabel->setVisible(true);
-        QTimer::singleShot(1000, this, &MainWindow::switchToNextScene); // Cambiar de escena después de 1 segundo
-        nextLevelActivated = true;
+        if (numeroDeObjetos >= 5) {
+            nextLevelLabel->setVisible(true);
+            QTimer::singleShot(1000, this, &MainWindow::switchToNextScene); // Cambiar de escena después de 1 segundo
+            nextLevelActivated = true;
+        } else {
+            // Mostrar un mensaje de advertencia si no tiene suficientes objetos
+            QMessageBox::warning(this, "Advertencia", "¡Faltan objetos para pasar de nivel!");
+        }
     }
 }
-
 
 
 
