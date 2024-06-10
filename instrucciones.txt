@@ -1,7 +1,7 @@
 Hola YURI bienvenido, en este instante se esta realizando una prueba a los reactores
-y puede salir muy mal, necesitamos buscar los objetos necesarios para detener la prueba.
+y puede salir muy mal, debemos buscar los objetos necesarios para detener la prueba.
 Al parecer el personal administrativo no sabe que los reactores están fallando.
-			¡¡Ayudanos!!
+				¡¡AYUDANOS!!
 
     Objetivo: 
     	* Explora Chernobyl, encuentra 5 objetos ocultos y pasa al siguiente nivel.

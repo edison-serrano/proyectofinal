@@ -62,6 +62,11 @@ private:
     bool scene2Initialized;
     bool nextLevelActivated;
     Inventario* inventario;
+    Inventario *inventario2;
+    Inventario* inventario3;
+    Inventario *inventario4;
+    Inventario *inventario5;
+
     npc1 *npc1Object;
     //npc1 npc1Object;
 
