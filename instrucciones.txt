@@ -5,6 +5,7 @@ Al parecer el personal administrativo no sabe que los reactores están fallando.
 
     Objetivo: 
     	* Explora Chernobyl, encuentra 5 objetos ocultos y pasa al siguiente nivel.
+    	* Para pasar de nivel busca la puerta roja en el mapa.
 
     Controles:
         * Usa las teclas de dirección (W, A, S, D) del teclado para moverte.

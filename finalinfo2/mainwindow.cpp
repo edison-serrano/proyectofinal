@@ -122,27 +122,27 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Crear y agregar el inventario a la escena principal
     inventario = new Inventario();
-    inventario->setPos(50, 50);  // Ajusta la posición
+    inventario->setPos(10, 30);  // Ajusta la posición
     scene->addItem(inventario);
 
     // Crear y agregar el segundo inventario a la escena principal
     inventario2 = new Inventario();
-    inventario2->setPos(50, 100);  // Ajusta la posición
+    inventario2->setPos(720, 100);  // Ajusta la posición
     scene->addItem(inventario2);
 
     // Crear y agregar el segundo inventario a la escena principal
     inventario3 = new Inventario();
-    inventario3->setPos(60, 100);  // Ajusta la posición
+    inventario3->setPos(360, 45);  // Ajusta la posición
     scene->addItem(inventario3);
 
     // Crear y agregar el segundo inventario a la escena principal
     inventario4 = new Inventario();
-    inventario4->setPos(90, 100);  // Ajusta la posición
+    inventario4->setPos(10, 370);  // Ajusta la posición
     scene->addItem(inventario4);
 
     // Crear y agregar el segundo inventario a la escena principal
     inventario5 = new Inventario();
-    inventario5->setPos(100, 100);  // Ajusta la posición
+    inventario5->setPos(520, 220);  // Ajusta la posición
     scene->addItem(inventario5);
 
 
@@ -187,10 +187,22 @@ MainWindow::MainWindow(QWidget *parent) :
     cajaAItem3->setPos(10, 90);
     scene->addItem(cajaAItem3);
 
+    //********************************************
+
     QPixmap cajaBPixmap(":/caja2.png");
     QGraphicsPixmapItem *cajaBItem = new QGraphicsPixmapItem(cajaBPixmap);
     cajaBItem->setPos(10, 60);
     scene->addItem(cajaBItem);
+
+    QGraphicsPixmapItem *cajaB1Item = new QGraphicsPixmapItem(cajaBPixmap);
+    cajaB1Item->setPos(10, 20);
+    scene->addItem(cajaB1Item);
+
+    QGraphicsPixmapItem *cajaB2Item = new QGraphicsPixmapItem(cajaBPixmap);
+    cajaB2Item->setPos(700, 100);
+    scene->addItem(cajaB2Item);
+
+    //********************************************
 
     QPixmap armarioPixmap(":/armario1.png");
     QGraphicsPixmapItem *armarioItem = new QGraphicsPixmapItem(armarioPixmap);
@@ -286,7 +298,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     // Objeto pasarnivel
-    nextLevelTrigger = new pasarnivel(150, 150, 15, 15);
+    nextLevelTrigger = new pasarnivel(740, 355, 15, 30);
     scene->addItem(nextLevelTrigger);
 
     // Etiqueta para mostrar las vidas
@@ -303,7 +315,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // QLabel para "Siguiente nivel"
     nextLevelLabel = new QLabel(this);
     nextLevelLabel->setText("Siguiente nivel");
-    nextLevelLabel->setGeometry(300, 200, 200, 50); // Ajusta la posición y tamaño según sea necesario
+    nextLevelLabel->setGeometry(300, 200, 200, 50); // Ajusta la posición y tamaño
     nextLevelLabel->setStyleSheet("QLabel { background-color : white; color : red; font: bold 24px; }");
     nextLevelLabel->setVisible(false);
 
