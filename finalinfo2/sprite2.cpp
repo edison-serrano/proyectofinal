@@ -3,7 +3,6 @@
 #include <QGraphicsScene>
 #include <QList>
 
-
 Sprite2::Sprite2(QGraphicsItem* parent)
     : QGraphicsPixmapItem(parent),
     currentFrame(2),  // Starting at the third frame (index 2)
@@ -14,7 +13,8 @@ Sprite2::Sprite2(QGraphicsItem* parent)
     parabolicMoving(false), // Inicializar la variable
     parabolicStep(0),
     parabolicHeight(40),  // Altura del salto
-    parabolicDuration(30)  // Duración del salto
+    parabolicDuration(30),
+    facingRight(true)  // Inicializar la dirección actual
 {
     spriteSheet.load(":/sprite2.png");  // Ensure the path is correct
     setPixmap(spriteSheet.copy(currentFrame * frameWidth, 0, frameWidth, frameHeight).scaled(frameWidth * scaleFactor, frameHeight * scaleFactor));
@@ -29,7 +29,13 @@ void Sprite2::startAnimation() {
 void Sprite2::updateFrame() {
     currentFrame = (currentFrame + 1) % totalFrames + 2;  // Cycling through frames 3, 4, 5, and 6
     int x = currentFrame * frameWidth;
-    setPixmap(spriteSheet.copy(x, 0, frameWidth, frameHeight).scaled(frameWidth * scaleFactor, frameHeight * scaleFactor));
+    QPixmap frame = spriteSheet.copy(x, 0, frameWidth, frameHeight).scaled(frameWidth * scaleFactor, frameHeight * scaleFactor);
+
+    if (!facingRight) {
+        frame = frame.transformed(QTransform().scale(-1, 1));  // Reflejar la imagen horizontalmente
+    }
+
+    setPixmap(frame);
 }
 
 void Sprite2::startParabolicMovement() {
@@ -44,7 +50,12 @@ void Sprite2::startParabolicMovement() {
 void Sprite2::moveParabolic() {
     if (parabolicStep <= parabolicDuration) {
         double t = static_cast<double>(parabolicStep) / parabolicDuration;
-        double newX = x() + 2; // Ajusta esto si deseas que se mueva más rápido horizontalmente
+        double newX;
+        if (facingRight) {
+            newX = x() + 2; // Mover hacia la derecha
+        } else {
+            newX = x() - 2; // Mover hacia la izquierda
+        }
         double newY = initialY - 8 * parabolicHeight * t * (1 - t);
 
         bool onPlatform = false;
@@ -75,17 +86,10 @@ void Sprite2::moveParabolic() {
     }
 }
 
-bool Sprite2::checkPlatformCollision(double newX, double newY)
-{
-    QRectF newRect(newX, newY, boundingRect().width(), boundingRect().height());
-    QList<QGraphicsItem *> collidingItemsList = scene()->collidingItems(this);
-    foreach (QGraphicsItem *item, collidingItemsList) {
-        if (Plataforma *plataforma = dynamic_cast<Plataforma *>(item)) {
-            QRectF platformRect = plataforma->boundingRect().translated(plataforma->pos());
-            if (newRect.intersects(platformRect)) {
-                return true;
-            }
-        }
+
+void Sprite2::setFacingRight(bool facingRight) {
+    if (this->facingRight != facingRight) {
+        this->facingRight = facingRight;
+        updateFrame();  // Actualizar el frame para reflejar la dirección
     }
-    return false;
 }
