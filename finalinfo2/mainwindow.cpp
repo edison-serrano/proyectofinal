@@ -18,8 +18,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     scene2Initialized(false),
     nextLevelActivated(false),
+    collisionFlag(false),
+    messageShown(false),
     numeroDeObjetos(0),
+    npc1Object(new npc1()),
+    collisionTimer(new QTimer(this)),
+    autoShowTimer(new QTimer(this)),
+    messageTimer(new QTimer(this)),
     pendulo(new Pendulo(50.0, 0.5))
+
 
 {
 
@@ -297,6 +304,20 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(timer2, &QTimer::timeout, this, &MainWindow::actualizarPendulo);
     timer2->start(16); // Actualizar aproximadamente cada 16 ms (~60 FPS)
 
+    //****************************************************************************
+
+    connect(collisionTimer, &QTimer::timeout, this, &MainWindow::checkCollisions);
+    connect(collisionTimer, &QTimer::timeout, this, &MainWindow::updateSprite2Position);
+    connect(autoShowTimer, &QTimer::timeout, this, &MainWindow::resetCollisionFlag);
+    connect(autoShowTimer, &QTimer::timeout, this, &MainWindow::autoShowMessage); // Conexión del temporizador
+    connect(messageTimer, &QTimer::timeout, this, &MainWindow::resetMessageTimer);
+
+    // Inicia los temporizadores
+    autoShowTimer->setInterval(10000);
+    collisionTimer->start(100);
+    autoShowTimer->start(1000);  // Inicia autoShowTimer
+    messageTimer->start(10000);  // Inicia messageTimer
+    //**************************************************************************
 
 }
 
@@ -464,6 +485,43 @@ void MainWindow::setupScene2()
 
 }
 
+void MainWindow::checkCollisionForMessage() {
+    // Verificar si Yuri está en colisión con NPC1 y el mensaje no se ha mostrado previamente
+    if (Yuri->collidesWithItem(npc1Object) && !messageShown) {
+        showMessage(); // Mostrar el mensaje
+    }
+}
+
+void MainWindow::showMessage() {
+    // Mostrar el mensaje
+    QMessageBox::information(this, "Mensaje", "Hola Yuri");
+    messageShown = true; // Establecer la bandera a true para indicar que el mensaje se ha mostrado
+    // Iniciar el temporizador para esperar 10 segundos antes de restablecer la bandera
+    messageTimer->start(10000); // 10 segundos
+}
+
+void MainWindow::autoShowMessage() {
+    // Inicia el temporizador solo si el temporizador de autoShowTimer no está activo
+    if (!autoShowTimer->isActive()) {
+        autoShowTimer->start();
+    }
+}
+
+void MainWindow::resetCollisionFlag() {
+    // Reinicia la bandera de colisión a false cuando el temporizador de autoShowTimer termina
+    collisionFlag = false;
+}
+
+void MainWindow::resetMessageTimer() {
+    // Detener el temporizador si está activo
+    if (messageTimer->isActive()) {
+        messageTimer->stop();
+    }
+    messageShown = false; // Restablecer la bandera cuando el temporizador termina
+}
+
+
+
 
 MainWindow::~MainWindow()
 {
@@ -471,6 +529,7 @@ MainWindow::~MainWindow()
     delete pendulo;
 }
 
+// Función de manejo de eventos de teclado
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     int newX = Yuri->x();
@@ -528,10 +587,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         return;
     }
 
-    // Verificar colisión con npc1
-    if (Yuri->collidesWithItem(npc1Object)) {
-        npc1Object->detectCollision(Yuri);
-    }
+    // Verificar colisión con npc1 y mostrar el mensaje si es necesario
+    checkCollisionForMessage();
 
     // Verificar colisión
     if (!Yuri->checkCollision(newX, newY)) {
@@ -574,23 +631,17 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         inventario = nullptr;  // Eliminar el puntero para evitar uso posterior
     }
 
-
-
     // Verificar colisión con pasarnivel
     if (Yuri->collidesWithItem(nextLevelTrigger) && !nextLevelActivated) {
         nextLevelLabel->setVisible(true);
         QTimer::singleShot(1000, this, &MainWindow::switchToNextScene); // Cambiar de escena después de 1 segundo
         nextLevelActivated = true;
     }
-
 }
 
 
-void MainWindow::showMessage()
-{
-    // Mostrar un cuadro de diálogo que diga "Hola Yuri"
-    QMessageBox::information(this, "Mensaje", "Hola Yuri");
-}
+
+
 
 void MainWindow::actualizarInventarioLabel() {
     inventarioLabel->setText(QString("Objetos: %1").arg(numeroDeObjetos));

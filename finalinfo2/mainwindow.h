@@ -65,6 +65,19 @@ private:
     npc1 *npc1Object;
     //npc1 npc1Object;
 
+    bool collisionFlag;
+    bool messageShown; // Declaración de la variable messageShown
+    QTimer *collisionTimer;
+    QTimer *autoShowTimer;
+    QTimer *messageTimer;
+
+/*
+    bool collisionFlag;
+    bool messageShown;
+    QTimer autoShowTimer;
+    QTimer messageTimer;
+    QTimer collisionTimer;
+*/
 
     int numeroDeObjetos;
     QLabel *inventarioLabel;
@@ -82,6 +95,14 @@ private slots:
     void restartGame();
     void switchToGameScene(); // Slot para cambiar a la escena del juego
     void showMessage();
+    void checkCollisionForMessage();
+
+
+    void autoShowMessage();
+    void resetCollisionFlag();
+    void resetMessageTimer();
+
+
     void actualizarPendulo(); // Slot para actualizar el péndulo
 };
 
