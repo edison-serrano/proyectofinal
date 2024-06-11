@@ -15,5 +15,6 @@
         <file>armario1.png</file>
         <file>barril1.png</file>
         <file>tuberia1.png</file>
+        <file>vidaextra.png</file>
     </qresource>
 </RCC>

@@ -15,6 +15,8 @@
 #include "radiacion.h"
 #include "sprite2.h"
 #include "plataforma.h"
+#include "QDebug"
+#include "vidaextra.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -280,6 +282,12 @@ MainWindow::MainWindow(QWidget *parent) :
     tuberia8Item->setPos(580, 100);
     tuberia8Item->setRotation(-90);
     scene->addItem(tuberia8Item);
+
+ //*******************************************************************************
+
+    VidaExtra *vidaExtra = new VidaExtra();
+    scene->addItem(vidaExtra);  // Añade la vida extra a la escena
+    vidaExtra->setPos(100, 100);  // Coloca la vida extra en una posición deseada en la escena
 
 
 //*******************************************************************************
@@ -873,29 +881,40 @@ void MainWindow::checkCollisions()
     QList<QGraphicsItem *> collidingItems = Yuri->collidingItems();
     foreach (QGraphicsItem *item, collidingItems) {
         if (dynamic_cast<enemigo *>(item)) {
-            Yuri->decreaseLife();// Restar vida al colisionar con enemigo
+            Yuri->decreaseLife();  // Restar vida al colisionar con enemigo
             if (Yuri->vidas <= 0) {
                 // Reiniciar el juego
                 resetGame();
                 break;
             }
         } else if (dynamic_cast<Reactor *>(item)) {
-            Yuri->decreaseLife(); // Restar vida al colisionar con el reactor
+            Yuri->decreaseLife();  // Restar vida al colisionar con el reactor
             if (Yuri->vidas <= 0) {
                 // Reiniciar el juego
                 resetGame();
                 break;
             }
         } else if (dynamic_cast<Radiacion *>(item)) {
-            Yuri->decreaseLife(); // Restar vida al colisionar con la radiación
+            Yuri->decreaseLife();  // Restar vida al colisionar con la radiación
             if (Yuri->vidas <= 0) {
                 // Reiniciar el juego
                 resetGame();
                 break;
             }
+        } else if (dynamic_cast<VidaExtra *>(item)) {
+            if (Yuri->vidas <= 50) {
+                Yuri->vidas = 100;
+            } else {
+                Yuri->vidas += 50;  // Añadir 50 puntos de vida al colisionar con VidaExtra
+            }
+            emit Yuri->vidaCambiada(Yuri->vidas);  // Emitir la señal para actualizar la UI
+
+            scene->removeItem(item);  // Eliminar VidaExtra de la escena
+            delete item;  // Liberar memoria
         }
     }
 }
+
 
 
 void MainWindow::resetGame()
