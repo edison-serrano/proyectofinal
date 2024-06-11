@@ -23,7 +23,8 @@ SOURCES += \
     radiacion.cpp \
     reactor.cpp \
     sprite.cpp \
-    sprite2.cpp
+    sprite2.cpp \
+    vidaextra.cpp
 
 HEADERS += \
     enemigo.h \
@@ -39,7 +40,8 @@ HEADERS += \
     radiacion.h \
     reactor.h \
     sprite.h \
-    sprite2.h
+    sprite2.h \
+    vidaextra.h
 
 FORMS += \
     mainwindow.ui

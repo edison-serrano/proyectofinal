@@ -20,6 +20,7 @@
 #include "inventario.h"
 #include "npc1.h"
 #include"pendulo.h"
+#include "vidaextra.h"
 
 namespace Ui {
 class MainWindow;
