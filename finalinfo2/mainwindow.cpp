@@ -335,9 +335,57 @@ MainWindow::MainWindow(QWidget *parent) :
     radiacion2->setPos(250, 200);
     scene2->addItem(radiacion2);
 
-    Radiacion *radiacion3 = new Radiacion(":/radiacion.png", 192, 192, 5, 1, 100, scene2, &paredes); // 192x192 cada img, 5x4 en total, 100 ms por img
+    Radiacion *radiacion3 = new Radiacion(":/radiacion.png", 192, 192, 5, 4, 100, scene2, &paredes); // 192x192 cada img, 5x4 en total, 100 ms por img
     radiacion3->setPos(100, 20);
     scene2->addItem(radiacion3);
+
+    Radiacion *radiacion4 = new Radiacion(":/radiacion.png", 192, 192, 5, 4, 80, scene2, &paredes); // 192x192 cada img, 5x4 en total, 100 ms por img
+    radiacion4->setPos(124, 340);
+    scene2->addItem(radiacion4);
+
+    Radiacion *radiacion5 = new Radiacion(":/radiacion.png", 192, 192, 5, 4, 80, scene2, &paredes); // 192x192 cada img, 5x4 en total, 100 ms por img
+    radiacion5->setPos(155, 340);
+    scene2->addItem(radiacion5);
+
+    Radiacion *radiacion6 = new Radiacion(":/radiacion.png", 192, 192, 5, 4, 80, scene2, &paredes); // 192x192 cada img, 5x4 en total, 100 ms por img
+    radiacion6->setPos(186, 340);
+    scene2->addItem(radiacion6);
+
+    Radiacion *radiacion7 = new Radiacion(":/radiacion.png", 192, 192, 5, 4, 80, scene2, &paredes); // 192x192 cada img, 5x4 en total, 100 ms por img
+    radiacion7->setPos(217, 340);
+    scene2->addItem(radiacion7);
+
+    Radiacion *radiacion8 = new Radiacion(":/radiacion.png", 192, 192, 5, 4, 80, scene2, &paredes); // 192x192 cada img, 5x4 en total, 100 ms por img
+    radiacion8->setPos(248, 340);
+    scene2->addItem(radiacion8);
+
+    Radiacion *radiacion9 = new Radiacion(":/radiacion.png", 192, 192, 5, 4, 80, scene2, &paredes); // 192x192 cada img, 5x4 en total, 100 ms por img
+    radiacion9->setPos(279, 340);
+    scene2->addItem(radiacion9);
+
+    Radiacion *radiacion10 = new Radiacion(":/radiacion.png", 192, 192, 5, 4, 80, scene2, &paredes); // 192x192 cada img, 5x4 en total, 100 ms por img
+    radiacion10->setPos(310, 340);
+    scene2->addItem(radiacion10);
+
+    Radiacion *radiacion11 = new Radiacion(":/radiacion.png", 192, 192, 5, 4, 80, scene2, &paredes); // 192x192 cada img, 5x4 en total, 100 ms por img
+    radiacion11->setPos(341, 340);
+    scene2->addItem(radiacion11);
+
+    Radiacion *radiacion12 = new Radiacion(":/radiacion.png", 192, 192, 5, 4, 80, scene2, &paredes); // 192x192 cada img, 5x4 en total, 100 ms por img
+    radiacion12->setPos(372, 340);
+    scene2->addItem(radiacion12);
+
+    Radiacion *radiacion13 = new Radiacion(":/radiacion.png", 192, 192, 5, 4, 80, scene2, &paredes); // 192x192 cada img, 5x4 en total, 100 ms por img
+    radiacion13->setPos(403, 340);
+    scene2->addItem(radiacion13);
+
+    Radiacion *radiacion14 = new Radiacion(":/radiacion.png", 192, 192, 5, 4, 80, scene2, &paredes); // 192x192 cada img, 5x4 en total, 100 ms por img
+    radiacion14->setPos(434, 340);
+    scene2->addItem(radiacion14);
+
+    Radiacion *radiacion15 = new Radiacion(":/radiacion.png", 192, 192, 5, 4, 80, scene2, &paredes); // 192x192 cada img, 5x4 en total, 100 ms por img
+    radiacion15->setPos(465, 340);
+    scene2->addItem(radiacion15);
     setupScene2();
 
     // Agregar el péndulo a la escena 2
@@ -477,13 +525,98 @@ void MainWindow::setupScene2()
     plataformasuelo1->setPos(31, 390); // Establece la posición de la plataforma
     scene2->addItem(plataformasuelo1);
 
-    Plataforma *plataformasuelo2 = new Plataforma();
-    plataformasuelo2->setPos(281, 390); // Establece la posición de la plataforma
-    scene2->addItem(plataformasuelo2);
+    Plataforma *plataformasuelo4 = new Plataforma();
+    plataformasuelo4->setPos(62, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo4);
 
-    Plataforma *plataformasuelo3 = new Plataforma();
-    plataformasuelo3->setPos(250, 390); // Establece la posición de la plataforma
-    scene2->addItem(plataformasuelo3);
+    Plataforma *plataformasuelo5 = new Plataforma();
+    plataformasuelo5->setPos(93, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo5);
+
+    Plataforma *plataformasuelo6 = new Plataforma();
+    plataformasuelo6->setPos(124, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo6);
+
+    Plataforma *plataformasuelo7 = new Plataforma();
+    plataformasuelo7->setPos(155, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo7);
+
+    Plataforma *plataformasuelo8 = new Plataforma();
+    plataformasuelo8->setPos(186, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo8);
+
+    Plataforma *plataformasuelo9 = new Plataforma();
+    plataformasuelo9->setPos(217, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo9);
+
+    Plataforma *plataformasuelo10 = new Plataforma();
+    plataformasuelo10->setPos(248, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo10);
+
+    Plataforma *plataformasuelo11 = new Plataforma();
+    plataformasuelo11->setPos(279, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo11);
+
+    Plataforma *plataformasuelo12 = new Plataforma();
+    plataformasuelo12->setPos(310, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo12);
+
+    Plataforma *plataformasuelo13 = new Plataforma();
+    plataformasuelo13->setPos(341, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo13);
+
+    Plataforma *plataformasuelo14 = new Plataforma();
+    plataformasuelo14->setPos(372, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo14);
+
+    Plataforma *plataformasuelo15 = new Plataforma();
+    plataformasuelo15->setPos(403, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo15);
+
+    Plataforma *plataformasuelo16 = new Plataforma();
+    plataformasuelo16->setPos(434, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo16);
+
+    Plataforma *plataformasuelo17 = new Plataforma();
+    plataformasuelo17->setPos(465, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo17);
+
+    Plataforma *plataformasuelo18 = new Plataforma();
+    plataformasuelo18->setPos(496, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo18);
+
+    Plataforma *plataformasuelo19 = new Plataforma();
+    plataformasuelo19->setPos(527, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo19);
+
+    Plataforma *plataformasuelo20 = new Plataforma();
+    plataformasuelo20->setPos(558, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo20);
+
+    Plataforma *plataformasuelo21 = new Plataforma();
+    plataformasuelo21->setPos(589, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo21);
+
+    Plataforma *plataformasuelo22 = new Plataforma();
+    plataformasuelo22->setPos(620, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo22);
+
+    Plataforma *plataformasuelo23 = new Plataforma();
+    plataformasuelo23->setPos(651, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo23);
+
+    Plataforma *plataformasuelo24 = new Plataforma();
+    plataformasuelo24->setPos(682, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo24);
+
+    Plataforma *plataformasuelo25 = new Plataforma();
+    plataformasuelo25->setPos(713, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo25);
+
+    Plataforma *plataformasuelo26 = new Plataforma();
+    plataformasuelo26->setPos(744, 390); // Establece la posición de la plataforma
+    scene2->addItem(plataformasuelo26);
+
 
 
     Plataforma *plataformaup = new Plataforma();
